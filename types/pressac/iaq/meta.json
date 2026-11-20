@@ -1,0 +1,53 @@
+{
+  "name": "IAQ Sensor",
+  "version": "1.0.0",
+  "manufacturer": "Pressac",
+  "url": "https://www.pressac.com/environment-sensors/lorawan-indoor-air-quality-sensors/",
+  "description": "Indoor sensor that measures CO2, TVOC, particulate matter (PM1 to PM10), temperature, humidity, light and sound and detects motion with PIR. Used for indoor air quality and occupancy monitoring in buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "TVOC",
+    "PIR",
+    "Sound",
+    "CO2",
+    "PM1.0",
+    "PM2.5",
+    "PM4.0",
+    "PM10",
+    "Light",
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "occupancy",
+    "lifecycle",
+    "configuration"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort",
+    "Occupancy & Space Utilization"
+  ],
+  "keywords": [
+    "Pressac",
+    "IAQ Sensor",
+    "IAQ",
+    "air quality",
+    "CO2",
+    "TVOC",
+    "PM2.5",
+    "PM10",
+    "particulate matter",
+    "PIR",
+    "occupancy",
+    "temperature",
+    "humidity",
+    "noise",
+    "light",
+    "LoRaWAN"
+  ]
+}

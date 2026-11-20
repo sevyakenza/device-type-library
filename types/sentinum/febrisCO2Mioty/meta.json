@@ -1,0 +1,40 @@
+{
+  "name": "Febris CO2 Mioty",
+  "version": "1.0.0",
+  "manufacturer": "Sentinum",
+  "url": "https://sentinum.de/febris-co2-sensor/",
+  "description": "Air quality traffic light that measures CO2 in ppm, temperature, humidity and pressure at regular intervals. Warns acoustically and visually when limits are exceeded and runs on 4 replaceable AA batteries.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Pressure",
+    "CO2",
+    "Dew Point"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "MIOTY",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Sentinum",
+    "Febris CO2 Mioty",
+    "Febris",
+    "CO2 traffic light",
+    "CO2",
+    "air quality",
+    "temperature",
+    "humidity",
+    "pressure",
+    "dew point",
+    "ventilation",
+    "mioty"
+  ]
+}

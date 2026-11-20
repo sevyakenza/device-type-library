@@ -1,0 +1,51 @@
+{
+  "name": "MCS-LRW",
+  "version": "1.0.0",
+  "manufacturer": "Thermokon",
+  "url": "https://www.thermokon.de/direct/en-gb/categories/g-mcs-lorawan",
+  "description": "Compact multi-sensor that monitors the state of up to two windows or doors and measures temperature, humidity, motion and brightness. Optional sensors such as CO2 and VOC extend it for indoor air quality monitoring.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Light",
+    "CO2",
+    "VOC",
+    "Pressure",
+    "Differential Pressure",
+    "Volume",
+    "Flow",
+    "Occupancy",
+    "Motion"
+  ],
+  "outputTopics": [
+    "default",
+    "status",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort",
+    "Occupancy & Space Utilization",
+    "Safety & Security"
+  ],
+  "keywords": [
+    "Thermokon",
+    "MCS-LRW",
+    "MCS",
+    "multisensor",
+    "window contact",
+    "door sensor",
+    "temperature",
+    "humidity",
+    "motion",
+    "PIR",
+    "brightness",
+    "CO2",
+    "VOC",
+    "occupancy",
+    "LoRaWAN"
+  ]
+}

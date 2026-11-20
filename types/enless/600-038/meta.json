@@ -1,0 +1,35 @@
+{
+  "name": "TX PULSE LED 600-038",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/pulse-sensor-led-optical-reader-lora/",
+  "description": "Optical sensor that counts the visible LED flashes of electricity meters and converts them into pulses. Attaches non-intrusively over the meter diode with an adhesive viewfinder and reports the pulse count.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Pulse Input"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Enless",
+    "TX PULSE LED",
+    "600-038",
+    "optical reader",
+    "LED pulse",
+    "electricity meter",
+    "pulse counter",
+    "meter reading",
+    "energy consumption",
+    "non-intrusive",
+    "LoRaWAN"
+  ]
+}

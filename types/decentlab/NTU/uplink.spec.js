@@ -1,23 +1,24 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Decentlab NTU Uplink", () => {
   let defaultSchema = null;
   let lifecycleSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
     done();
   });
 
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/default.schema.json`)
+    loadSchema(`${__dirname}/default.schema.json`)
       .then((parsedSchema) => {
         defaultSchema = parsedSchema;
         done();
@@ -25,8 +26,7 @@ describe("Decentlab NTU Uplink", () => {
   });
 
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
+    loadSchema(`${__dirname}/lifecycle.schema.json`)
       .then((parsedSchema) => {
         lifecycleSchema = parsedSchema;
         done();
@@ -42,7 +42,7 @@ describe("Decentlab NTU Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -50,13 +50,13 @@ describe("Decentlab NTU Uplink", () => {
         assert.equal(value.topic, "default");
         assert.equal(value.data.temperature, 21.81);
         assert.equal(value.data.turbidityInFnu, 31.8);
-        assert.equal(value.data.turbidityInMg_l, 56.3);
+        assert.equal(value.data.turbidityInMgL, 56.3);
         assert.equal(value.data.turbidityInNtu, 31.8);
 
-        utils.validateSchema(value.data, defaultSchema, { throwError: true });
+        validateSchema(value.data, defaultSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -67,7 +67,7 @@ describe("Decentlab NTU Uplink", () => {
         assert.equal(value.data.protocolVersion, 2);
         assert.equal(value.data.status, 0);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);

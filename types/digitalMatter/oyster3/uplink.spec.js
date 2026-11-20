@@ -1,18 +1,19 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Digital matter Oyster 3 Uplink", () => {
   let positionSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/position.schema.json`)
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/position.schema.json`)
       .then((parsedSchema) => {
         positionSchema = parsedSchema;
         done();
@@ -21,8 +22,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
 
   let lifecycleSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
+    loadSchema(`${__dirname}/lifecycle.schema.json`)
       .then((parsedSchema) => {
         lifecycleSchema = parsedSchema;
         done();
@@ -31,8 +31,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
 
   let downlinkAckSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/downlink_ack.schema.json`)
+    loadSchema(`${__dirname}/downlink_ack.schema.json`)
       .then((parsedSchema) => {
         downlinkAckSchema = parsedSchema;
         done();
@@ -41,7 +40,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
 
   let statsSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/stats.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/stats.schema.json`).then((parsedSchema) => {
       statsSchema = parsedSchema;
       done();
     });
@@ -49,8 +48,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
 
   let watchdogSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/watchdog.schema.json`)
+    loadSchema(`${__dirname}/watchdog.schema.json`)
       .then((parsedSchema) => {
         watchdogSchema = parsedSchema;
         done();
@@ -59,8 +57,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
 
   let statsV3Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/stats_v3.schema.json`)
+    loadSchema(`${__dirname}/stats_v3.schema.json`)
       .then((parsedSchema) => {
         statsV3Schema = parsedSchema;
         done();
@@ -76,7 +73,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -85,10 +82,10 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.batteryVoltage, 5.55);
         assert.equal(value.data.batteryLevel, 100);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -101,7 +98,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.headingDeg, 0);
         assert.equal(value.data.speedKmph, 0);
 
-        utils.validateSchema(value.data, positionSchema, { throwError: true });
+        validateSchema(value.data, positionSchema, { throwError: true });
       });
 
       consume(data);
@@ -115,7 +112,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -128,7 +125,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.productId, 98);
         assert.equal(value.data.sequence, 83);
 
-        utils.validateSchema(value.data, downlinkAckSchema, {
+        validateSchema(value.data, downlinkAckSchema, {
           throwError: true,
         });
       });
@@ -144,7 +141,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -161,7 +158,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.uptimeWeeks, 189);
         assert.equal(value.data.wakeupsPerTrip, 56);
 
-        utils.validateSchema(value.data, statsSchema, { throwError: true });
+        validateSchema(value.data, statsSchema, { throwError: true });
       });
 
       consume(data);
@@ -175,7 +172,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -184,10 +181,10 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.batteryVoltage, 3.55);
         assert.equal(value.data.batteryLevel, 0);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -214,7 +211,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -226,7 +223,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.resetWatchdog, true);
         assert.equal(value.data.watchdogReason, 259);
 
-        utils.validateSchema(value.data, watchdogSchema, { throwError: true });
+        validateSchema(value.data, watchdogSchema, { throwError: true });
       });
 
       consume(data);
@@ -240,7 +237,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -251,10 +248,10 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.uptimeWeeks, 664);
         assert.equal(value.data.wakeupsPerTrip, 243);
 
-        utils.validateSchema(value.data, statsSchema, { throwError: true });
+        validateSchema(value.data, statsSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -271,7 +268,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.percentSleepDis, 25);
         assert.equal(value.data.ttff, 139);
 
-        utils.validateSchema(value.data, statsV3Schema, { throwError: true });
+        validateSchema(value.data, statsV3Schema, { throwError: true });
       });
 
       consume(data);
@@ -285,7 +282,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -294,10 +291,10 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.batteryVoltage, 5.932);
         assert.equal(value.data.batteryLevel, 100);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -312,7 +309,7 @@ describe("Digital matter Oyster 3 Uplink", () => {
         assert.equal(value.data.inTrip, true);
         assert.equal(value.data.speedKmph, 90);
 
-        utils.validateSchema(value.data, positionSchema, { throwError: true });
+        validateSchema(value.data, positionSchema, { throwError: true });
       });
 
       consume(data);

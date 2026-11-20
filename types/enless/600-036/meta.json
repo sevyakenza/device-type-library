@@ -1,0 +1,38 @@
+{
+  "name": "TX PULSE 600-036",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/pulse-meter-sensor-lora/",
+  "description": "Pulse counter with two inputs for meters with dry contact or open collector outputs, so two meters can be read at once. Reports meter index values for consumption monitoring and leak or overconsumption detection.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Pulse Input",
+    "Digital Input"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Enless",
+    "TX PULSE",
+    "600-036",
+    "pulse counter",
+    "meter reading",
+    "water meter",
+    "gas meter",
+    "electricity meter",
+    "dry contact",
+    "open collector",
+    "overconsumption",
+    "LoRaWAN"
+  ]
+}

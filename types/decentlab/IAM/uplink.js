@@ -75,8 +75,8 @@ const decentlabDecoder = {
                   Math.max(1.0 * x[0] - 1.64 * x[1], 0.59 * x[0] - 0.86 * x[1]),
                   0,
                 ) *
-                  1.5504 *
-                  100,
+                1.5504 *
+                100,
               ) / 100
             );
           },
@@ -200,11 +200,74 @@ function deleteUnusedKeys(data) {
   return keysRetained;
 }
 
+function checkForCustomFields(device, target, fallbackValue) {
+  if (device !== undefined && device.customFields !== undefined && device.customFields[target] !== undefined) {
+    return device.customFields[target];
+  }
+  return fallbackValue;
+}
+
+function calculateRecentOccupancy(device, state, occupancy) {
+  const minOccupancyThreshold = checkForCustomFields(device, "minOccupancyThreshold", 3);
+  const occupancyWarmThreshold = checkForCustomFields(device, "occupancyWarmThreshold", 90);
+  state = state || {};
+
+  // Occupancy status
+  if (occupancy.occupied) {
+    occupancy.occupancyStatus = "OCCUPIED";
+    occupancy.occupiedOrWarm = true;
+  } else {
+    occupancy.occupancyStatus = "FREE";
+    occupancy.occupiedOrWarm = false;
+  }
+
+  const time = new Date().getTime();
+  occupancy.minutesSinceLastOccupied = 0;
+  occupancy.occupiedMinutes = 0;
+
+  if (occupancy.occupied) {
+    // Set state to first occupancy occurence so occupied time can be calulcated
+    if (state.firstOccupancyTimestamp == undefined) {
+      state.firstOccupancyTimestamp = time;
+    }
+    // Give out how long there has been occupancy
+    occupancy.occupiedMinutes = Math.round((time - state.firstOccupancyTimestamp) / 1000 / 60);
+
+    // Only reset if a real occupancy has been tracked or its out of cycle
+    if (occupancy.occupiedMinutes >= minOccupancyThreshold) {
+      delete state.lastOccupancyTimestamp; // Reset cycle
+      delete state.occupiedMinutes;
+    }
+  } else {
+    // Give out how long there has been no occupancy
+    if (state.lastOccupancyTimestamp !== undefined) {
+      occupancy.minutesSinceLastOccupied = Math.round((time - state.lastOccupancyTimestamp) / 1000 / 60);
+    } else {
+      state.lastOccupancyTimestamp = time;
+
+      // Only save the timestamp on first leave and save how long the occupancy has gone on for
+      state.occupiedMinutes = Math.round((time - state.firstOccupancyTimestamp) / 1000 / 60);
+      delete state.firstOccupancyTimestamp; // Reset cycle
+    }
+  }
+
+  if (occupancy.minutesSinceLastOccupied < occupancyWarmThreshold && !occupancy.occupied && state.occupiedMinutes >= minOccupancyThreshold) {
+    occupancy.warm = true;
+    occupancy.occupiedOrWarm = true;
+    occupancy.occupancyStatus = "WARM";
+  } else {
+    occupancy.warm = false;
+    occupancy.occupiedOrWarm = occupancy.occupied;
+  }
+  return { state, occupancy }
+}
+
 function consume(event) {
   const payload = event.data.payloadHex;
   const sample = decentlabDecoder.decode(payload);
   const data = {};
   const lifecycle = {};
+  let occupancy = {};
 
   data.temperature = sample.air_temperature;
   data.humidity = sample.air_humidity;
@@ -243,14 +306,16 @@ function consume(event) {
   }
 
   if (data.pir !== 0) {
-    emit("sample", {
-      data: { occupancy: true, occupied: true },
-      topic: "occupancy",
-    });
+    occupancy.occupancy = 1;
+    occupancy.occupied = true;
   } else {
-    emit("sample", {
-      data: { occupancy: false, occupied: false },
-      topic: "occupancy",
-    });
+    occupancy.occupancy = 0;
+    occupancy.occupied = false;
   }
+
+  let recentOccupancyResult = calculateRecentOccupancy(event.device, event.state, occupancy);
+  occupancy = recentOccupancyResult.occupancy;
+
+  emit("state", recentOccupancyResult.state);
+  emit("sample", { data: occupancy, topic: "occupancy" });
 }

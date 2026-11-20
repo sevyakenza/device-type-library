@@ -1,0 +1,35 @@
+{
+  "name": "FT101",
+  "version": "1.0.0",
+  "manufacturer": "Milesight",
+  "url": "https://www.milesight.com/product/accessories/ft101",
+  "description": "Handheld LoRaWAN field tester with a 5.72 inch HD touch screen for signal assessment and optimization in networks. Provides real-time signal testing and analysis to check gateway coverage and support device deployment.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Connectivity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Testing & Debugging"
+  ],
+  "keywords": [
+    "Milesight",
+    "FT101",
+    "field tester",
+    "network tester",
+    "signal strength",
+    "RSSI",
+    "SNR",
+    "coverage",
+    "gateway coverage",
+    "site survey",
+    "LoRaWAN"
+  ]
+}

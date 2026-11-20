@@ -1,0 +1,36 @@
+{
+  "name": "TX TEMP CONT1 600-032",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/temperature-sensor-external-probe-pt1000-lora/",
+  "description": "Temperature sensor with an external PT1000 contact probe that measures surface temperatures from -180 to +250 °C. Used for cold rooms, operating equipment, data centers and sanitary water circuits.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Cold Chain & Temperature Compliance"
+  ],
+  "keywords": [
+    "Enless",
+    "TX TEMP CONT1",
+    "600-032",
+    "PT1000",
+    "contact probe",
+    "surface temperature",
+    "cold room",
+    "data center",
+    "hot water",
+    "pipe temperature",
+    "LoRaWAN"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "TX 4/20 mA 600-035",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/analog-sensor-4-20ma-lora/",
+  "description": "Interface device with an analog 4-20 mA input that reads the signal of an external probe, which is not included. Used for pressure, level and extreme temperature measurement with industrial transmitters.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Current"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Enless",
+    "TX 4/20 mA",
+    "600-035",
+    "4-20 mA",
+    "analog input",
+    "sensor interface",
+    "pressure transmitter",
+    "level transmitter",
+    "industrial sensor",
+    "LoRaWAN"
+  ]
+}

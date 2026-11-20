@@ -1,0 +1,37 @@
+{
+  "name": "R718A",
+  "version": "1.0.0",
+  "manufacturer": "Netvox",
+  "url": "http://www.netvox.com.tw/product.asp?pro=R718A",
+  "description": "Temperature and humidity sensor designed for low temperature environments. Mounted on walls or in refrigerators and cold storage for food, medicines, flowers and other perishable goods during storage and transport.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "system"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Cold Chain & Temperature Compliance"
+  ],
+  "keywords": [
+    "Netvox",
+    "R718A",
+    "temperature",
+    "humidity",
+    "low temperature",
+    "fridge",
+    "freezer",
+    "cold storage",
+    "cold chain",
+    "pharmaceutical",
+    "HACCP",
+    "LoRaWAN"
+  ]
+}

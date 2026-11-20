@@ -2,7 +2,756 @@
 
 All notable changes to this project will be documented in this file.
 
----
+# [1.102.0] - 2026-11-16
+
+### Added
+
+- Sensocon - DataSling Series WS
+- Sensocon - DataSling Series WM
+
+# [1.101.5] - 2026-11-05
+
+### Changed
+
+- Made tests faster
+- Testing errors are now none cascading
+- Fixed test for dds04-lb
+
+# [1.101.4] - 2026-10-28
+
+### Fixed
+
+- Decentlab TRS11: `dielectricPermittivity` now decodes identically in Node.js and GraalJS by writing out `Math.pow` as multiplications
+
+### Changed
+
+- Option to test in integration mode is now extended
+- Dates manipulated while testing are now forced onto UTC
+
+# [1.101.3] - 2026-10-28
+
+### Fixed
+
+- Fixed deprecated references in github actions
+
+# [1.101.2] - 2026-10-27
+
+### Fixed
+
+- Enless TX PULSE 600-036, 600-037, 600-038 and TX CONTACT 600-039: pulse counters now reference `pulseInput/count` and the OPEN/CLOSED state fields no longer reference the boolean `digitalInput`
+- Miromico Alarm: removed the out-of-range `maximum` of `batteryUsage`
+
+### Changed
+
+- Schema validation now applies the platform's `$ref` merge (type, unit and measurementType from the reference) and fails on `$ref`s not pointing to a measurement type, type mismatches with the `$ref`, enum values not matching the property type and integer bounds outside the 32-bit range
+
+# [1.101.1] - 2026-10-26
+
+### Fixed
+
+- SmartEnds BrighterBins: `distanceError` is now typed as string to match its enum values
+
+# [1.101.0] - 2026-10-26
+
+### Added
+
+- Miromico - Alarm
+
+### Changed
+
+- Framer push now also controlls sub collections
+- Episensor added backfilling cap
+
+# [1.100.3] - 2026-10-19
+
+### Changed
+
+- Added new workflow to push synced requests to framer
+
+# [1.100.2] - 2026-10-13
+
+### Changed
+
+- meta.jsons got reworked. New properties useCases & keywords got introduced and populated.
+- Device description also got standardised.
+
+# [1.100.1] - 2026-10-08
+
+### Changed
+
+- WS202 - Interpreting pir as occupancy and give it out as such
+- Browan devices - emiting configuration and system data which came with a newer firmware version
+
+# [1.100.0] - 2026-10-07
+
+### Added
+
+- MClimate PIR Mini
+- MClimate HT + PIR Lite
+- MClimate CO2 + PIR Lite
+- MClimate CO2 Display
+- MClimate CO2 Display Lite
+- MClimate Wireless Thermostat
+- MClimate Fan Coil Thermostat
+- MClimate 16A Switch & Power Meter (16ASPM)
+- MClimate 16A Dry Switch (16ADS)
+- MClimate T-Valve
+- MClimate Open/Close Sensor
+
+### Fixed
+
+- MClimate Vicki & Vicki V4 - Command responses no longer crash the decoder and status flags (open window, child lock, motor and battery flags) are decoded correctly
+- MClimate Vicki - Downlink encoder sends the period for setInternalAlgoParams, a two byte motor position for setTargetTemperatureAndMotorPosition and rounds decimal values
+- MClimate Flood Sensor - Flood and box tamper flags are decoded correctly
+- MClimate HT & Button - Command responses are decoded instead of being read as a keepalive, which produced wrong values (e.g. 781.3 °C)
+- MClimate CO2 - Command responses use the CO2 sensor commands instead of the Vicki ones and no longer end up in the default topic
+
+### Changed
+
+- MClimate Vicki, Vicki V4, Flood Sensor, HT, Button & CO2 - Added a configuration topic for command responses (one datapoint per setting)
+- MClimate Vicki & Vicki V4 - Added valve openness, D2D and low battery flags
+- MClimate Vicki & Vicki V4 - Removed the raw_payload topic
+- MClimate HT & CO2 - Humidity is reported with two decimals instead of being rounded to an integer
+
+# [1.99.2] - 2026-09-30
+
+### Changed
+
+- Episensor - Discarding old episens data as it interfers with the state
+
+# [1.99.1] - 2026-09-28
+
+### Changed
+
+- Disruptive - Added repeat flag on repeated datapoints
+
+# [1.99.0] - 2026-09-01
+
+### Added
+
+- Terabee - POC
+
+### Changed
+
+- Removed and replaced substr with substring
+
+# [1.98.1] - 2026-08-04
+
+### Changed
+
+- Asystom Sentinel - Added posibility for to decode fragmented payloads
+- Browan - Catching empty browan payloads
+
+# [1.98.0] - 2026-07-27
+
+### Added
+
+- Elsys - ERS Interact Lite
+
+# [1.97.4] - 2026-07-23
+
+### Changed
+
+- Xovis PC2SV5 - Split occupancy and queue message
+- Watteco Bob - Introduced new topic for runtime & status messages and extrapolated description and outputs of already existing datapoints
+
+# [1.97.3] - 2026-07-08
+
+### Changed
+
+- Xovis PC2SV5 - Added support age bucket addon
+
+# [1.97.2] - 2026-07-06
+
+### Changed
+
+- VS350 - Added support for new version
+
+# [1.97.1] - 2026-06-30
+
+### Changed
+
+- DS3604 - Removed aforementioned change again
+- Merged available sensors
+
+# [1.97.0] - 2026-06-25
+
+### Added
+
+- Pressac - CT Clamp
+- Pressac - Room Conditions Sensor
+
+# [1.96.4] - 2026-06-18
+
+### Changed
+
+- DS3604 - translating Umlaute which where not supported by the device
+
+# [1.96.3] - 2026-06-17
+
+### Changed
+
+- Elsys - removed readme as its not supported
+- DT Contact - Added functionality that measures the time the sensor has contact and no contact
+
+# [1.96.2] - 2026-06-09
+
+### Changed
+
+- Elsys - Unified uplink where possible and extended sensor settings for newer device versions
+
+# [1.96.1] - 2026-05-28
+
+### Changed
+
+- Enless - fixed conversion issue for status and alarms
+
+# [1.96.0] - 2026-05-20
+
+### Added
+
+- Efento - 4-20 mA Analog Sensor Interface
+
+# [1.95.1] - 2026-05-13
+
+### Changed
+
+- Warmdesk values are now taken over if space was not used for the defined mimimum usage time
+- Added explanation of customFields to the readme
+
+# [1.95.0] - 2026-05-06
+
+### Added
+
+- Pressac - IAQ
+
+# [1.94.0] - 2026-05-05
+
+### Added
+
+- Wika - Netris 2
+
+# [1.93.0] - 2026-04-27
+
+### Changed
+
+- Adds new `counterType` to identify counter measurements:
+  - `"counterType": "monotonic"` to identify an ever-increasing counter and never resets under normal operation
+  - `"counterType": "delta"` to identify where the device reports the increment since its last transmission rather than the absolute total
+  - `"counterType": "gauge"` is the default when the field is absent; set it explicitly only when you want to make the intent unambiguous
+  - `"counterType": "categorical"` to identify any measurement whose value is a string enum or boolean — the platform will not attempt arithmetic aggregation on it
+- Adds new `*Delta` measurement types for energy and flow
+
+# [1.92.1] - 2026-04-13
+
+### Changed
+
+- VergeSense - Cloud connector - Now also emits sensor report data
+
+# [1.92.0] - 2026-04-02
+
+### Added
+
+- Sensry.io - Kallisto
+
+# [1.91.1] - 2026-03-25
+
+### Changed
+
+- VergeSense - Cloud connector - Now also emits floor data
+
+# [1.91.0] - 2026-03-19
+
+### Added
+
+- Adeunis - Temp 4
+
+# [1.90.0] - 2026-03-10
+
+### Added
+
+- inBiot - MICA
+- inBiot - MICA MINI
+- inBiot - MICA PLUS
+- inBiot - MICA WELL
+
+# [1.89.0] - 2026-02-26
+
+### Added
+
+- Monnit - Wireless current monitoring meter. Available as 20, 150, and 500-amp industrial-grade devices.
+
+# [1.88.2] - 2026-02-25
+
+### Changed
+
+- Enhanced the Disruptive Technologies Wireless Contact Sensor to allow washroom usage output
+
+# [1.88.1] - 2026-02-12
+
+### Changed
+
+- Enhanced the Disruptive Technologies Wireless Contact Sensor to also output door counts
+
+# [1.88.0] - 2026-02-03
+
+### Added
+
+- Episensor - Episensor
+
+### Changed
+
+- Changed cTof function so it rounds the farenheit values up to 2 decimals
+
+# [1.87.0] - 2026-01-28
+
+### Added
+
+- Hilscher - IO-Link Master
+
+# [1.87.1] - 2026-01-30
+
+### Changed
+
+- Changed image size and added IO-Link to the sensor field.
+
+# [1.87.0] - 2026-01-28
+
+### Added
+
+- Hilscher - IO-Link Master
+
+# [1.86.0] - 2026-01-07
+
+### Added
+
+- Dragino - DDS04-LB
+
+# [1.85.0] - 2026-01-6
+
+### Added
+
+- AirThings - Rel. Light
+
+# [1.84.0] - 2025-12-8
+
+### Added
+
+- Dragino - DDS20-LB
+
+# [1.83.0] - 2025-12-4
+
+### Added
+
+- Dragino - LHT65N-VIB
+- Milesight - GS601
+
+# [1.82.0] - 2025-11-17
+
+### Added
+
+- Asystom - Sentinel
+
+# [1.81.0] - 2025-11-13
+
+### Added
+
+- Decentlab - Rad
+
+# [1.80.0] - 2025-11-11
+
+### Changed
+
+- TBDW100 - Browan, Disruptive technologies - Proximity, Elsys - EMS Door, Swisscom - Multisense
+- Added door count datapoints
+
+# [1.79.0] - 2025-10-23
+
+### Added
+
+- TWTG - Neon Vibration
+
+### Changed
+
+- Nexelec Origin - Now correctly grabs the event.timestamp
+
+# [1.78.0] - 2025-10-21
+
+### Changed
+
+- Netvox & Advantech - Added batteryLevel calculations
+
+# [1.77.1] - 2025-10-17
+
+### Added
+
+- Elsys - ELT-2-Radar
+- Elsys - ELT-2-Ultrasonic-5m
+- Elsys - ELT-2-Ultrasonic-10m
+- Elsys - ELT-2-Ultrasonic-snow
+- Elsys - ELT-2-Internal antenna
+- Elsys - ERS Display
+- Elsys - ERS Display CO2
+
+### Changed
+
+- Updated Elsys names
+- Fixed downlink response handling for DS3604
+- Added possibility for Xovis to send age data
+- Merged Acceleration, Accelerometer - XYZ and Vibration into Accelerometer in the meta files
+
+# [1.77.0] - 2025-10-08
+
+### Added
+
+- Advantech - WISE2410
+
+# [1.76.0] - 2025-10-06
+
+### Added
+
+- Netvox - R712
+- Netvox - R718A
+- Netvox - R718B
+- Netvox - R718G
+- Netvox - R718LB
+- Netvox - R718WA
+- Netvox - RB11E
+
+# [1.75.1] - 2025-10-02
+
+### Changed
+
+- DS3604 Downlink encoder now excpects a payload object and allows multidownlinks
+
+# [1.75.0] - 2025-09-25
+
+### Added
+
+- Nexelec - Origin
+
+### Changed
+
+- Added a fix for the Flash'O where multiple phases can send but would get emited as the same
+- Updated a lot of datapoints with schema references
+
+# [1.74.0] - 2025-09-16
+
+### Added
+
+- Enless 600-021
+- Enless 600-022
+- Enless 600-023
+- Enless 600-031
+- Enless 600-032
+- Enless 600-034
+- Enless 600-035
+- Enless 600-036
+- Enless 600-037
+- Enless 600-038
+- Enless 600-039
+- Enless 600-050
+- Enless 600-051
+- Enless 600-052
+- Enless 600-053
+- Enless 600-062
+- Enless 600-065
+- Enless 600-232
+
+### Changed
+
+- Unifyed occupancy occupancy to send 1 or 0 if its not an elsys device
+
+# [1.73.0] - 2025-09-15
+
+### Added
+
+- Dragino - SE0X-LB
+- Enlink - IAQ
+- Termokon - MCS-LRW
+
+### Changed
+
+- DS3604 downlink and config additions
+- Added Fahrenheit emit to airthings & disruptive devices
+
+# [1.72.0] - 2025-09-08
+
+### Added
+
+- Milesight - CT103
+- Thermokon - SAB07
+- Milesight - AM102
+
+# [1.71.0] - 2025-09-03
+
+### Changed
+
+- Fixed tests for meta schemas to not time out when schema is not valid
+
+# [1.70.0] - 2025-08-28
+
+### Added
+
+- Descriptions for missing meta schema properties.
+
+# [1.69.0] - 2025-08-19
+
+### Added
+
+- MOKO - LW005-MP
+- MOKO - LW007-PIR
+
+# [1.69.0] - 2025-08-19
+
+### Added
+
+- Dragino - S31LB-LS
+
+### Changed
+
+- Fixed race condition while loading schemas in Kuando busylight tests
+
+# [1.68.0] - 2025-07-23
+
+### Added
+
+- Hager - TG563A
+
+### Changed
+
+- Disruptive Proximity now emits washroom usage
+
+# [1.67.0] - 2025-07-16
+
+### Added
+
+- Moko - LW001-BG-PRO
+
+### Changed
+
+- Elsys EMS Door now emits absolutcounts on events too
+- Added env template and option to test locally with "LOCAL" TEST_MODE
+
+# [1.66.1] - 2025-07-15
+
+### Changed
+
+- VergeSense now emits sign of live values
+- Airthings devices now emit pm values
+- Disruptive devices now repeat on change values and suppress lifecycles to once an hour
+
+# [1.66.0] - 2025-07-09
+
+### Added
+
+- Akenza building edge - Energy
+- Akenza building edge - Occupancy
+- Akenza building edge - Water
+
+### Changed
+
+- Decentlab IAM - Fixed tests
+
+# [1.65.2] - 2025-06-30
+
+### Changed
+
+- Decentlab IAM - Unifyd occupancy topic so its in line with the rest
+- Environment data model - added pm4
+- IOS data model - added count for buttons
+- Spaces data model - added percentFree, percentOccupied
+
+# [1.65.2] - 2025-07-01
+
+### Added
+
+- Usage count measurement type
+
+### Changed
+
+- Browan Tabs Door & Window Sensor, TBDW100 - Add usage count schema
+
+# [1.65.1] - 2025-06-24
+
+### Changed
+
+- Airthings - Merging new and old samples to always emit a complete payload
+- Disruptive Technologies temperature & humidity - will now split subsamples into their own samples
+- Terabee People Counting XL - Now counts relative and absolute forward and backward
+
+# [1.65.0] - 2025-06-19
+
+### Added
+
+- Airthings - Cloud Connector
+
+### Changed
+
+- BRAKING CHANGE: Disruptive Technologies temperature values will now be saved on the default topic
+
+# [1.64.2] - 2025-06-18
+
+### Changed
+
+- Vergesense - Now repeats samples each hour to keep the buckets full
+
+# [1.64.1] - 2025-06-12
+
+### Changed
+
+- Data model - added feet and inches for distance
+- Vergesense Cloud-connector - handling occupancy on a different topic
+- Disruptive Proximity and Proximity Counter - now give out calculated values
+- Vegapulse Devices - give out distance in all possible units now
+
+# [1.64.0] - 2025-06-11
+
+### Added
+
+- Wika - Netris 1
+- Wika - Pew
+- Vegapulse - Vegapulse Air 42
+- Vegapulse - Vegapulse Air 43
+
+# [1.63.0] - 2025-05-22
+
+### Added
+
+- Axis - People Counter
+
+# [1.62.0] - 2025-05-16
+
+### Added
+
+- Disruptive - Contact
+- Disruptive - Proximity Counter
+- Disruptive - Touch Counter
+
+# [1.61.0] - 2025-04-23
+
+### Added
+
+- Vegapulse - Vegapulse air
+- IMBuildings - VertiCount
+- Milesight - CT305
+- Milesight - CT310
+- Milesight - EM300-CL
+- Milesight - FT101
+- Milesight - TS201
+- Milesight - WS303
+
+### Changed
+
+- Removed illegal temperature values for all Dragino devices
+
+# [1.60.0] - 2025-04-03
+
+### Changed
+
+- New tests for camelcasing datakeys and underscoring topics
+- Adapted all the following devices
+- IMBuildings - ComfortSensor
+- IMBuildings - MoodBox
+- IMBuildings - OfficeOccupancyCounter
+- IMBuildings - PeopleCounter
+- Comtac - LPN_DO
+- Decentlab - NTU
+- Decentlab - PM
+- Enginko - EGK-LW22PLG
+- Enginko - MCF-LW12MET
+- Lansen - G2-LDP
+- Milesight - CT101
+- Miromico - Insight
+- Talkpool - OY1700
+- Xovis - PC2S
+- Yosensi - YO-360
+- Yosensi - YO-Agribox
+- Yosensi - YO-AirflowPro
+- Yosensi - YO-AirflowProDual
+- Yosensi - YO-Ambience
+- Yosensi - YO-Distance
+- Yosensi - YO-H2O
+- Yosensi - YO-ParticulateMatterSensor
+- Yosensi - YO-PeopleCounter
+- Yosensi - YO-Power
+- Yosensi - YO-RefrigerantMonitor
+- Yosensi - YO-RelaySwitch
+- Yosensi - YO-Temp
+- Yosensi - YO-Thermostat
+- Yosensi - YO-VibrationMonitor
+
+# [1.59.0] - 2025-03-12
+
+### Added
+
+- Yosensi - YO-360
+- Yosensi - YO-Agribox
+- Yosensi - YO-AirflowPro
+- Yosensi - YO-AirflowProDual
+- Yosensi - YO-Ambience
+- Yosensi - YO-Analog
+- Yosensi - YO-Distance
+- Yosensi - YO-H20
+- Yosensi - YO-MeterPulse
+- Yosensi - YO-MeterReader2.0
+- Yosensi - YO-ParticulateMatterSensor
+- Yosensi - YO-PeopleCounter
+- Yosensi - YO-Power
+- Yosensi - YO-Pulse
+- Yosensi - YO-PurePro
+- Yosensi - YO-RefrigerantMonitor
+- Yosensi - YO-RelaySwitch
+- Yosensi - YO-Thermostat
+- Yosensi - YO-VibrationMonitor
+
+### Changed
+
+- Elsys - Omit LoRa secrets from config
+
+# [1.58.1] - 2025-01-10
+
+### Added
+
+- Sensoterra - Sensoterra
+- Oxon - Oxobutton 2
+- Verge Sense - Cloud connector
+- Milesight - EM410-RDL
+- Milesight - VS351
+- Milesight - VS360
+- Milesight - WT201
+
+### Changed
+
+- Unifyed noise and sound into sound for topics and available sensors. Also referencing standard schemas
+
+# [1.57.2] - 2025-01-09
+
+### Changed
+
+- Added downlink encoder for the MCLimate Vicki
+
+# [1.57.1] - 2024-12-12
+
+### Changed
+
+- Implemented warm desk logic. Occupancy devices now output an additional time how long they where unoccupied
+- Standardised the occupancy value and added minutesSinceLastOccupied for the upcoming warmdesk logic
+
+# [1.57.0] - 2024-11-28
+
+### Added
+
+- Lansen - G2-LDP
+- Miromico - Insight MIOTY
+- Sentinum - FebrisCO2 MIOTY
+
+# [1.56.0] - 2024-10-17
+
+### Added
+
+- Quandify - Cubicmeter 1.1 plastic
+- Quandify - Cubicmeter 1.1 copper
 
 # [1.55.0] - 2024-10-04
 

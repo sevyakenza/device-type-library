@@ -13,8 +13,16 @@
       "description": "Indoor LoRaWAN® device for measuring the indoor environment and desk occupancy",
       "author": "Akenza AG",
       "firmwareVersion": "V1.0.0",
-      "availableSensors": ["Occupancy", "Temperature", "Humidity", "Light"],
-      "outputTopics": ["default", "occupancy"],
+      "availableSensors": [
+        "Occupancy",
+        "Temperature",
+        "Humidity",
+        "Light"
+      ],
+      "outputTopics": [
+        "default",
+        "occupancy"
+      ],
       "encoding": "HEX",
       "connectivity": "LORA"
     }
@@ -23,41 +31,54 @@
     "name",
     "version",
     "manufacturer",
+    "url",
+    "description",
     "author",
+    "availableSensors",
     "outputTopics",
     "encoding",
-    "connectivity"
+    "connectivity",
+    "useCases",
+    "keywords"
   ],
   "properties": {
     "name": {
       "type": "string",
       "title": "The name schema",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["Elsys - ERS Desk"]
+      "description": "Device type display name.",
+      "examples": [
+        "Elsys - ERS Desk"
+      ]
     },
     "version": {
       "type": "string",
-      "title": "The version schema",
-      "description": "An explanation about the purpose of this instance.",
+      "title": "The device type version schema",
+      "description": "The version of the device type (schemas + script).",
       "pattern": "^([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?$",
-      "examples": ["1.0.0"]
+      "examples": [
+        "1.0.0"
+      ]
     },
     "manufacturer": {
       "type": "string",
       "title": "The manufacturer schema",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["Elsys"]
+      "description": "Device manufacturer name.",
+      "examples": [
+        "Elsys"
+      ]
     },
     "url": {
       "type": "string",
       "title": "The url schema",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["https://www.elsys.se/shop/product/ers-desk/"]
+      "description": "URL of the device.",
+      "examples": [
+        "https://www.elsys.se/shop/product/ers-desk/"
+      ]
     },
     "description": {
       "type": "string",
       "title": "The description schema",
-      "description": "An explanation about the purpose of this instance.",
+      "description": "Short device overview.",
       "examples": [
         "Indoor LoRaWAN® device for measuring the indoor environment and desk occupancy"
       ]
@@ -65,21 +86,30 @@
     "author": {
       "type": "string",
       "title": "The author schema",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": ["Akenza AG"]
+      "description": "Author of the device type.",
+      "examples": [
+        "Akenza AG"
+      ]
     },
     "firmwareVersion": {
       "type": "string",
       "title": "The firmwareVersion schema",
-      "description": "An explanation about the purpose of this instance.",
+      "description": "Firmware version reported by the device.",
       "pattern": "^V([0-9]+)\\.([0-9]+)\\.([0-9]+)(?:-([0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*))?(?:\\+[0-9A-Za-z-]+)?$",
-      "examples": ["V1.0.0"]
+      "examples": [
+        "V1.0.0"
+      ]
     },
     "availableSensors": {
       "type": "array",
       "title": "The availableSensors schema",
-      "description": "An explanation about the purpose of this instance.",
-      "examples": [["Occupancy", "Temperature"]],
+      "description": "List of sensors the device provides.",
+      "examples": [
+        [
+          "Occupancy",
+          "Temperature"
+        ]
+      ],
       "uniqueItems": true,
       "items": {
         "type": "string"
@@ -88,9 +118,16 @@
     "outputTopics": {
       "type": "array",
       "title": "The outputTopics schema",
-      "description": "An explanation about the purpose of this instance.",
-      "default": ["default"],
-      "examples": [["default", "occupancy"]],
+      "description": "Topics the device publishes (e.g., default, lifecycle).",
+      "default": [
+        "default"
+      ],
+      "examples": [
+        [
+          "default",
+          "occupancy"
+        ]
+      ],
       "uniqueItems": true,
       "items": {
         "type": "string"
@@ -99,16 +136,81 @@
     "encoding": {
       "type": "string",
       "title": "The encoding schema",
-      "description": "An explanation about the purpose of this instance.",
-      "enum": ["HEX", "JSON"],
-      "examples": ["HEX"]
+      "description": "Payload encoding format.",
+      "enum": [
+        "HEX",
+        "JSON"
+      ],
+      "examples": [
+        "HEX"
+      ]
     },
     "connectivity": {
       "type": "string",
       "title": "The connectivity schema",
-      "description": "An explanation about the purpose of this instance.",
-      "enum": ["LORA", "Sigfox", "MQTT", "HTTP", "NB-IOT"],
-      "examples": ["LORA"]
+      "description": "Network technology used by the device.",
+      "enum": [
+        "LORA",
+        "Sigfox",
+        "MQTT",
+        "HTTP",
+        "NB-IOT",
+        "MIOTY"
+      ],
+      "examples": [
+        "LORA"
+      ]
+    },
+    "useCases": {
+      "type": "array",
+      "title": "The useCases schema",
+      "description": "Use cases the device is suited for, primary use case first.",
+      "examples": [
+        [
+          "Occupancy & Space Utilization",
+          "Indoor Air Quality & Comfort"
+        ]
+      ],
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "enum": [
+          "Occupancy & Space Utilization",
+          "People & Vehicle Counting",
+          "Indoor Air Quality & Comfort",
+          "Cold Chain & Temperature Compliance",
+          "Leak Detection",
+          "Safety & Security",
+          "Energy & Utility Metering",
+          "Building Automation & Control",
+          "Fill Level Monitoring",
+          "Asset Tracking",
+          "Condition Monitoring",
+          "Smart Agriculture",
+          "Weather & Outdoor Environment",
+          "Facility Services & Feedback",
+          "Testing & Debugging"
+        ]
+      }
+    },
+    "keywords": {
+      "type": "array",
+      "title": "The keywords schema",
+      "description": "Search terms related to the device, most relevant first.",
+      "examples": [
+        [
+          "Elsys",
+          "ERS Desk",
+          "desk occupancy",
+          "temperature"
+        ]
+      ],
+      "uniqueItems": true,
+      "maxItems": 20,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
     }
   }
 }

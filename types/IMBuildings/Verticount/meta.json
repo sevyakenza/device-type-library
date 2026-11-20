@@ -1,0 +1,37 @@
+{
+  "name": "VertiCount Pro",
+  "version": "1.0.0",
+  "manufacturer": "IMBuildings",
+  "url": "https://imbuildings.com/products/verticount-pro/",
+  "description": "Ceiling-mounted people counter that detects movements through passageways without count lines or calibration. It reports in and out counts and running totals to determine building and room utilization.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "People Counting"
+  ],
+  "outputTopics": [
+    "default",
+    "total_counter",
+    "lifecycle",
+    "error"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "People & Vehicle Counting"
+  ],
+  "keywords": [
+    "IMBuildings",
+    "VertiCount Pro",
+    "Verticount",
+    "people counter",
+    "ceiling mounted",
+    "in out counting",
+    "doorway",
+    "footfall",
+    "visitor counting",
+    "occupancy",
+    "LoRaWAN"
+  ]
+}

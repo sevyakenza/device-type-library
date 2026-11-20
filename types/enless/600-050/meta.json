@@ -1,0 +1,39 @@
+{
+  "name": "TX T&H MINI 600-050",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/eu868-lorawan-mini-temperature-humidity-sensor-copy/",
+  "description": "Compact indoor sensor that measures temperature and humidity and is powered by a 2/3 AA battery. Used for occupant comfort and energy performance in offices, schools, housing and public buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V3.03.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "datalog",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Enless",
+    "TX T&H MINI",
+    "600-050",
+    "temperature",
+    "humidity",
+    "compact",
+    "room climate",
+    "comfort",
+    "energy performance",
+    "office",
+    "housing",
+    "LoRaWAN"
+  ]
+}

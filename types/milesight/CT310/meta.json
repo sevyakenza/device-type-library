@@ -1,0 +1,37 @@
+{
+  "name": "CT310",
+  "version": "1.0.0",
+  "manufacturer": "Milesight",
+  "url": "https://www.milesight.com/iot/product/lorawan-sensor/ct3xx",
+  "description": "Three-channel current transformer that samples at up to 3.3 kHz and calculates cumulative ampere-hours every second per channel. Used for energy monitoring and to identify consumption patterns in buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Current"
+  ],
+  "outputTopics": [
+    "channel1",
+    "channel2",
+    "channel3",
+    "system",
+    "temperature"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Milesight",
+    "CT310",
+    "current transformer",
+    "three-channel",
+    "current",
+    "ampere-hours",
+    "energy monitoring",
+    "electricity",
+    "consumption patterns",
+    "LoRaWAN"
+  ]
+}

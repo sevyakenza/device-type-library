@@ -1,0 +1,38 @@
+{
+  "name": "VS360",
+  "version": "1.0.0",
+  "manufacturer": "Milesight",
+  "url": "https://www.milesight.com/iot/product/lorawan-sensor/vs360",
+  "description": "Passage people counter with dual PIR sensors for bidirectional detection. Counts people passing in and out of doors and corridors and is used for tracking foot traffic and occupancy in offices and public buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "People Counting"
+  ],
+  "outputTopics": [
+    "event",
+    "people_flow",
+    "lifecycle",
+    "status",
+    "system"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "People & Vehicle Counting"
+  ],
+  "keywords": [
+    "Milesight",
+    "VS360",
+    "people counter",
+    "PIR",
+    "bidirectional",
+    "passage counter",
+    "foot traffic",
+    "in/out counting",
+    "door",
+    "corridor",
+    "LoRaWAN"
+  ]
+}

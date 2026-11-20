@@ -1,0 +1,44 @@
+{
+  "name": "ERS Display CO2 LoRa",
+  "version": "1.0.0",
+  "manufacturer": "Elsys",
+  "url": "https://www.elsys.se/en/ers-display-co2-lora/",
+  "description": "Indoor sensor that measures CO2, temperature, humidity, light and motion with a 2.13 inch e-paper display. Shows current values to occupants and is used for air quality and occupancy monitoring in rooms.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V3.3.4",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Humidity",
+    "Temperature",
+    "CO2",
+    "Light",
+    "Motion"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "configuration",
+    "occupancy"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort",
+    "Occupancy & Space Utilization"
+  ],
+  "keywords": [
+    "Elsys",
+    "ERS Display CO2",
+    "ERSD CO2",
+    "CO2",
+    "e-paper display",
+    "NDIR",
+    "temperature",
+    "humidity",
+    "light",
+    "motion",
+    "air quality",
+    "occupancy",
+    "LoRaWAN"
+  ]
+}

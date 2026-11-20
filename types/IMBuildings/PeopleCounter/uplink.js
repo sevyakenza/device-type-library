@@ -104,22 +104,20 @@ function consume(event) {
     case payloadTypes.PEOPLE_COUNTER: {
       switch (payloadVariant) {
         case 0x04: {
-          lifecycle.deviceID = `${bytes[bytes.length - 22]}${
-            bytes[bytes.length - 21]
-          }${bytes[bytes.length - 20]}${bytes[bytes.length - 19]}${
-            bytes[bytes.length - 18]
-          }${bytes[bytes.length - 17]}`;
+          lifecycle.deviceID = `${bytes[bytes.length - 22]}${bytes[bytes.length - 21]
+            }${bytes[bytes.length - 20]}${bytes[bytes.length - 19]}${bytes[bytes.length - 18]
+            }${bytes[bytes.length - 17]}`;
           lifecycle.deviceStatus = deviceStatus(
-            Bits.bitsToUnsigned(bits.substr(64, 8)),
+            Bits.bitsToUnsigned(bits.substring(64, 72)),
           );
 
           lifecycle.batteryVoltage =
-            Bits.bitsToUnsigned(bits.substr(72, 16)) / 100;
-          lifecycle.rssi = Bits.bitsToSigned(bits.substr(88, 8));
-          data.counterA = Bits.bitsToUnsigned(bits.substr(152, 16));
-          data.counterB = Bits.bitsToUnsigned(bits.substr(168, 16));
+            Bits.bitsToUnsigned(bits.substring(72, 88)) / 100;
+          lifecycle.rssi = Bits.bitsToSigned(bits.substring(88, 96));
+          data.counterA = Bits.bitsToUnsigned(bits.substring(152, 168));
+          data.counterB = Bits.bitsToUnsigned(bits.substring(168, 184));
           lifecycle.sensorStatus = sensorStatus(
-            Bits.bitsToUnsigned(bits.substr(184, 8)),
+            Bits.bitsToUnsigned(bits.substring(184, 192)),
           );
 
           emit("sample", { data, topic: "default" });
@@ -136,13 +134,13 @@ function consume(event) {
           totalCounter.totalCounterB = readUInt16BE(bytes, bytes.length - 3);
           lifecycle.payloadCounter = bytes[bytes.length - 1];
           emit("sample", { data, topic: "default" });
-          emit("sample", { data: totalCounter, topic: "totalCounter" });
+          emit("sample", { data: totalCounter, topic: "total_counter" });
           break;
         case 0x07:
           lifecycle.sensorStatus = sensorStatus(bytes[bytes.length - 5]);
           totalCounter.totalCounterA = readUInt16BE(bytes, bytes.length - 4);
           totalCounter.totalCounterB = readUInt16BE(bytes, bytes.length - 2);
-          emit("sample", { data: totalCounter, topic: "totalCounter" });
+          emit("sample", { data: totalCounter, topic: "total_counter" });
           break;
         case 0x08:
           lifecycle.deviceStatus = deviceStatus(bytes[bytes.length - 4]);
@@ -189,7 +187,7 @@ function consume(event) {
     }
     default:
       emit("sample", {
-        data: { reason: "UNSUPORTED_PAYLOAD" },
+        data: { reason: "UNSUPORTED_PAYLOAD", payload },
         topic: "error",
       });
       break;

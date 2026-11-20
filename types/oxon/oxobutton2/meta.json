@@ -1,0 +1,39 @@
+{
+  "name": "Oxobutton 2",
+  "version": "1.0.0",
+  "manufacturer": "Oxon",
+  "url": "https://www.oxobutton.ch/",
+  "description": "Button device with four tactile corner buttons that recognizes nine click and tilt actions, including tilting and pressing all four buttons. Has an e-ink display set over BLE and also measures temperature and humidity.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Button",
+    "Image",
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Facility Services & Feedback"
+  ],
+  "keywords": [
+    "Oxon",
+    "Oxobutton 2",
+    "Oxobutton",
+    "button",
+    "e-ink display",
+    "feedback",
+    "service request",
+    "tilt",
+    "temperature",
+    "humidity",
+    "BLE",
+    "LoRaWAN"
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "name": "ERS Interact Lite Comfort LoRa",
+  "version": "1.0.0",
+  "manufacturer": "Elsys",
+  "url": "https://www.elsys.se/en/ers-interact-lite-comfort-lora/",
+  "description": "Indoor sensor that measures temperature and humidity and has two capacitive touch buttons. Occupants can adjust a target temperature, which allows simple thermostat interaction in offices and rooms.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V2.3.5",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Target Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "configuration"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Elsys",
+    "ERS Interact Lite",
+    "ERS Interact",
+    "thermostat",
+    "setpoint",
+    "target temperature",
+    "touch buttons",
+    "temperature",
+    "humidity",
+    "room climate",
+    "comfort",
+    "LoRaWAN"
+  ]
+}

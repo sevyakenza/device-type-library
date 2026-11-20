@@ -1,0 +1,19 @@
+{
+  "$id": "https://akenza.io/xovis/pc2sv5/dwell_time.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "processingType": "uplink_decoder",
+  "topic": "dwell_time",
+  "title": "Dwell time",
+  "properties": {
+    "queueTime": {
+      "title": "Queue time",
+      "description": "Queue time",
+      "type": "number",
+      "unit": "s"
+    }
+  },
+  "required": [
+    "queueTime"
+  ]
+}

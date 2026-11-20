@@ -1,17 +1,19 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Digital matter Guppy Uplink", () => {
   let statusSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils.loadSchema(`${__dirname}/status.schema.json`).then((parsedSchema) => {
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/status.schema.json`).then((parsedSchema) => {
       statusSchema = parsedSchema;
       done();
     });
@@ -26,7 +28,7 @@ describe("Digital matter Guppy Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -36,7 +38,7 @@ describe("Digital matter Guppy Uplink", () => {
         assert.equal(value.data.temperature, 25);
         assert.equal(value.data.batteryVoltage, 3.358);
 
-        utils.validateSchema(value.data, statusSchema, { throwError: true });
+        validateSchema(value.data, statusSchema, { throwError: true });
       });
 
       consume(data);
@@ -50,7 +52,7 @@ describe("Digital matter Guppy Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -75,7 +77,7 @@ describe("Digital matter Guppy Uplink", () => {
         assert.equal(value.data.xyzInclinationDeg[1], 51);
         assert.equal(value.data.xyzInclinationDeg[2], 93.5);
 
-        utils.validateSchema(value.data, statusSchema, { throwError: true });
+        validateSchema(value.data, statusSchema, { throwError: true });
       });
 
       consume(data);

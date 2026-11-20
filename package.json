@@ -4,31 +4,35 @@
   "description": "Akenza Device Type Library",
   "main": "index.js",
   "scripts": {
-    "test": "mocha \"types/**/*.spec.js\" \"lib/**/*.spec.js\"",
-    "integration-test": "TEST_MODE=INTEGRATION API_KEY=$API_KEY SCRIPT_RUN_URL=$SCRIPT_RUN_URL npm run test"
+    "push-to-framer": "node lib/framerSync/framerSync.js",
+    "test": "TZ=UTC mocha \"types/**/*.spec.js\" \"lib/**/*.spec.js\"",
+    "integration-test": "TEST_MODE=INTEGRATION npm run test"
   },
+  "type": "module",
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "ajv": "^6.12.4",
-    "axios": "^0.21.4",
+    "@eslint/js": "^10.0.1",
+    "ajv": "^8.20.0",
+    "axios": "^1.20.0",
     "bits": "file:lib/bits",
-    "chai": "^4.2.0",
-    "eslint": "^7.26.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-config-google": "^0.14.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "^2.22.1",
-    "glob": "^7.1.6",
+    "brace-expansion": ">=5.0.12",
+    "chai": "^6.3.0",
+    "dotenv": "^18.0.9",
+    "eslint": "^10.13.0",
+    "eslint-config-prettier": "^10.1.8",
+    "fast-uri": ">=4.2.3",
+    "glob": "^13.0.6",
+    "globals": "^17.13.0",
     "hex": "file:lib/hex",
-    "jsonschema": "^1.2.6",
-    "mocha": "^10.2.0",
-    "prettier": "3.2.5",
-    "rewire": "^5.0.0",
+    "js-yaml": ">=5.5.0",
+    "jsonschema": "^1.5.0",
+    "mocha": "^12.0.3",
+    "prettier": "^3.9.10",
+    "rewire": "^9.0.1",
+    "serialize-javascript": ">=7.1.4",
     "sync-request": "^6.1.0",
-    "test-utils": "file:lib/test"
-  },
-  "dependencies": {
-    "dotenv": "^16.3.1"
+    "test-utils": "file:lib/test",
+    "framer-api": "^5.1.0"
   }
 }

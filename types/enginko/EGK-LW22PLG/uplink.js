@@ -11,7 +11,7 @@ function reverseBytes(bytes) {
 
 function hexStringToByteArray(s) {
   for (var bytes = [], c = 0; c < s.length; c += 2) {
-    bytes.push(parseInt(s.substr(c, 2), 16));
+    bytes.push(parseInt(s.substring(c, c + 2), 16));
   }
   return bytes;
 }
@@ -109,20 +109,20 @@ function consume(event) {
       k += 8;
     }
 
-    data.inputStatus1_8 = firstByte[0].toString(2);
-    data.inputStatus9_16 = secondByte[0].toString(2);
-    data.inputStatus17_24 = thirdByte[0].toString(2);
-    data.inputStatus25_32 = fourthByte[0].toString(2);
+    data.inputStatus1to8 = firstByte[0].toString(2);
+    data.inputStatus9to16 = secondByte[0].toString(2);
+    data.inputStatus17to24 = thirdByte[0].toString(2);
+    data.inputStatus25to32 = fourthByte[0].toString(2);
 
-    data.outputStatus1_8 = firstByte[1].toString(2);
-    data.outputStatus9_16 = secondByte[1].toString(2);
-    data.outputStatus17_24 = thirdByte[1].toString(2);
-    data.outputStatus25_32 = fourthByte[1].toString(2);
+    data.outputStatus1to8 = firstByte[1].toString(2);
+    data.outputStatus9to16 = secondByte[1].toString(2);
+    data.outputStatus17to24 = thirdByte[1].toString(2);
+    data.outputStatus25to32 = fourthByte[1].toString(2);
 
-    data.inputTrigger1_8 = firstByte[2].toString(2);
-    data.inputTrigger9_16 = secondByte[2].toString(2);
-    data.inputTrigger17_24 = thirdByte[2].toString(2);
-    data.inputTrigger25_32 = fourthByte[2].toString(2);
+    data.inputTrigger1to8 = firstByte[2].toString(2);
+    data.inputTrigger9to16 = secondByte[2].toString(2);
+    data.inputTrigger17to24 = thirdByte[2].toString(2);
+    data.inputTrigger25to32 = fourthByte[2].toString(2);
   }
 
   emit("sample", { data, topic });

@@ -1,0 +1,37 @@
+{
+  "name": "TX T&H AMB E-INK 600-052",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/copy/",
+  "description": "Indoor sensor that measures temperature and humidity with a 2.13 inch e-ink display. Shows current values to occupants and is used for comfort monitoring in offices, schools and other commercial buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V3.03.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Enless",
+    "TX T&H E-INK",
+    "600-052",
+    "e-ink display",
+    "temperature",
+    "humidity",
+    "room climate",
+    "comfort",
+    "office",
+    "school",
+    "LoRaWAN"
+  ]
+}

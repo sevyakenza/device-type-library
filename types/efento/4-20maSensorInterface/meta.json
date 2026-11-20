@@ -1,0 +1,33 @@
+{
+  "name": "4-20 mA Analog Sensor Interface",
+  "version": "1.0.0",
+  "manufacturer": "Efento",
+  "url": "https://getefento.com/product/wireless-4-20-ma-sensor-interface-nb-iot/",
+  "description": "Interface device with two analog 4-20 mA inputs for connecting industrial sensors. Sensors can be powered by the device battery or externally, and values can be reported as current or converted to other units.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Current"
+  ],
+  "outputTopics": [
+    "configuration",
+    "lifecycle",
+    "measurements"
+  ],
+  "encoding": "JSON",
+  "connectivity": "NB-IOT",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Efento",
+    "4-20 mA",
+    "analog input",
+    "sensor interface",
+    "industrial sensor",
+    "current loop",
+    "pressure transmitter",
+    "level transmitter",
+    "NB-IoT"
+  ]
+}

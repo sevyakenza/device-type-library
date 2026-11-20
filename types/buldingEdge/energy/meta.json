@@ -1,0 +1,33 @@
+{
+  "name": "Akenza Building Edge Energy",
+  "version": "1.0.0",
+  "manufacturer": "Tridium",
+  "url": "https://www.tridium.com/us/en/Products/niagara/jace",
+  "description": "Integration of a building management system that forwards energy consumption values. It makes meter data from existing building control systems available for energy monitoring, reporting and optimization.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Consumption"
+  ],
+  "outputTopics": [
+    "consumption",
+    "lifecycle"
+  ],
+  "encoding": "JSON",
+  "connectivity": "MQTT",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "akenza",
+    "Building Edge",
+    "BMS integration",
+    "building management",
+    "energy consumption",
+    "meter data",
+    "electricity",
+    "energy monitoring",
+    "MQTT"
+  ]
+}

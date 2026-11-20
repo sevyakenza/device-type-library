@@ -1,0 +1,171 @@
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+describe("Digital Technologies Desk Sensor Uplink", () => {
+  let occupancySchema = null;
+  let consume = null;
+  before((done) => {
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/occupancy.schema.json`).then((parsedSchema) => {
+      occupancySchema = parsedSchema;
+      done();
+    });
+  });
+
+  describe("consume()", () => {
+    it("should decode the Digital Technologies Desk Sensor payload", () => {
+      const data = {
+        "data": {
+          "deskOccupancy": {
+            "state": "NOT_OCCUPIED",
+            "updateTime": "2025-05-09T10:46:46.000000Z",
+            "remarks": []
+          },
+          "eventType": "deskOccupancy",
+          "labels": {},
+          "eventId": "d0etq5jlo1jc73as7ur0",
+          "targetName": "projects/d0cv6cco848c73ajtmv0/devices/cj5jpe7r23r0008c1pmg"
+        },
+        "topic": "default",
+        "state": {},
+        "timestamp": 1746787606
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+        assert.equal(value.topic, "occupancy");
+
+        assert.equal(value.data.occupiedMinutes, 0);
+        assert.equal(value.data.minutesSinceLastOccupied, 0);
+        assert.equal(value.data.occupancy, 0);
+        assert.equal(value.data.occupancyStatus, "FREE");
+        assert.equal(value.data.occupied, false);
+        assert.equal(value.data.occupiedOrWarm, false);
+        assert.equal(value.data.warm, false);
+        assert.equal(value.data.repeat, false);
+
+        validateSchema(value.data, occupancySchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.equal(value.lastOccupiedValue, false);
+        assert.isDefined(value.lastSampleEmittedAt);
+        assert.isDefined(value.lastOccupancyTimestamp);
+        assert.isDefined(value.occupiedMinutes);
+      });
+
+      consume(data);
+    });
+
+    it("should decode the Digital Technologies Desk Sensor payload", () => {
+      const data = {
+        "data": {
+          "deskOccupancy": {
+            "state": "OCCUPIED",
+            "updateTime": "2025-05-09T10:46:46.000000Z",
+            "remarks": []
+          },
+          "eventType": "deskOccupancy",
+          "labels": {},
+          "eventId": "d0etq5jlo1jc73as7ur0",
+          "targetName": "projects/d0cv6cco848c73ajtmv0/devices/cj5jpe7r23r0008c1pmg"
+        },
+        "topic": "default",
+        "state": {},
+        "timestamp": 1746787606
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+        assert.equal(value.topic, "occupancy");
+
+        assert.equal(value.data.occupiedMinutes, 0);
+        assert.equal(value.data.minutesSinceLastOccupied, 0);
+        assert.equal(value.data.occupancy, 1);
+        assert.equal(value.data.occupancyStatus, "OCCUPIED");
+        assert.equal(value.data.occupied, true);
+        assert.equal(value.data.occupiedOrWarm, true);
+        assert.equal(value.data.warm, false);
+        assert.equal(value.data.repeat, false);
+
+        validateSchema(value.data, occupancySchema, { throwError: true });
+      });
+
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.equal(value.lastOccupiedValue, true);
+        assert.isDefined(value.lastSampleEmittedAt);
+        assert.exists(value.firstOccupancyTimestamp);
+      });
+
+      consume(data);
+    });
+
+    it("should repeat the Digital Technologies Contact Sensor payload", () => {
+      const data = {
+        eventId: "c510f9ag03fligl8tvag",
+        targetName:
+          "projects/c3t7p26j4a2g00de1sng/devices/bjmgj6dp0jt000a5dcug",
+        eventType: "networkStatus",
+        data: {
+          eventType: "networkStatus",
+          "networkStatus": {
+            "signalStrength": 10,
+            "rssi": 10,
+            "transmissionMode": "HIGH_POWER_BOOST_MODE",
+            "updateTime": "2024-12-06T14:23:50.728000Z"
+          }
+        },
+        timestamp: "2021-09-15T14:48:05.948000Z",
+        labels: {},
+        state: {
+          lastOccupiedValue: true,
+          lastNetworkEmittedAt: new Date().getTime() - 10 * 60 * 1000,
+          firstOccupancyTimestamp: new Date().getTime() - 10 * 60 * 1000,
+          lastSampleEmittedAt: 1752131670374
+        }
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "occupancy");
+        assert.equal(value.data.occupiedMinutes, 10);
+        assert.equal(value.data.minutesSinceLastOccupied, 0);
+        assert.equal(value.data.occupancy, 1);
+        assert.equal(value.data.occupancyStatus, "OCCUPIED");
+        assert.equal(value.data.occupied, true);
+        assert.equal(value.data.occupiedOrWarm, true);
+        assert.equal(value.data.warm, false);
+        assert.equal(value.data.repeat, true);
+
+        validateSchema(value.data, occupancySchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+        assert.equal(value.lastOccupiedValue, true);
+        assert.isDefined(value.lastSampleEmittedAt);
+        assert.isDefined(value.lastNetworkEmittedAt);
+      });
+
+      consume(data);
+    });
+  });
+});

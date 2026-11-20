@@ -1,0 +1,37 @@
+{
+  "name": "TX PULSE ATEX 600-037",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/pulse-meter-sensor-atex-approved-gas-lora/",
+  "description": "ATEX Zone 0 certified pulse counter for gas meters with dry contact or open collector outputs. Reports the gas meter index value periodically and comes with a 2 m pulse cable that can be replaced by an interface cable.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Pulse Input",
+    "Digital Input"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Enless",
+    "TX PULSE ATEX",
+    "600-037",
+    "ATEX",
+    "pulse counter",
+    "gas meter",
+    "meter reading",
+    "explosive atmosphere",
+    "dry contact",
+    "open collector",
+    "LoRaWAN"
+  ]
+}

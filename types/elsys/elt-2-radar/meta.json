@@ -1,0 +1,41 @@
+{
+  "name": "ELT Distance radar LoRa",
+  "version": "1.0.0",
+  "manufacturer": "Elsys",
+  "url": "https://www.elsys.se/en/elt-radar-distance-sensor/",
+  "description": "Radar distance sensor for outdoor use that measures the distance to a surface. It also measures ambient temperature, humidity, atmospheric pressure and acceleration and is used for fill and water level monitoring.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V2.3.5",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Distance",
+    "Pressure"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "configuration"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Fill Level Monitoring"
+  ],
+  "keywords": [
+    "Elsys",
+    "ELT Distance radar",
+    "ELT-2",
+    "radar",
+    "distance sensor",
+    "fill level",
+    "water level",
+    "tank level",
+    "temperature",
+    "humidity",
+    "pressure",
+    "outdoor",
+    "LoRaWAN"
+  ]
+}

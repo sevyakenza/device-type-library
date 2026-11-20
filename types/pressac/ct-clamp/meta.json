@@ -1,0 +1,33 @@
+{
+  "name": "CT Clamp",
+  "version": "1.0.0",
+  "manufacturer": "Pressac",
+  "url": "https://www.pressac.com/energy-sensors/current-monitoring-sensors/",
+  "description": "Current clamp sensor that measures electrical current on up to three channels using clamp-on current transformers. Provides energy usage data for buildings to help reduce consumption and improve energy efficiency.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Current"
+  ],
+  "outputTopics": [
+    "default"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Pressac",
+    "CT Clamp",
+    "current clamp",
+    "current transformer",
+    "current",
+    "energy monitoring",
+    "three channel",
+    "energy efficiency",
+    "electricity",
+    "LoRaWAN"
+  ]
+}

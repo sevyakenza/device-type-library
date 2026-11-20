@@ -1,0 +1,41 @@
+{
+  "name": "ELT Ultrasonic 10m LoRa",
+  "version": "1.0.0",
+  "manufacturer": "Elsys",
+  "url": "https://www.elsys.se/en/elt-ultrasonic/",
+  "description": "Ultrasonic distance sensor in an IP67 enclosure that measures up to 10 m. Used outdoors for water level under bridges and container fill levels, and it also measures temperature, humidity and pressure.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V2.3.5",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Distance",
+    "Pressure"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "configuration"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Fill Level Monitoring"
+  ],
+  "keywords": [
+    "Elsys",
+    "ELT Ultrasonic 10m",
+    "ELT-2",
+    "ultrasonic",
+    "distance sensor",
+    "water level",
+    "river level",
+    "fill level",
+    "container",
+    "temperature",
+    "humidity",
+    "IP67",
+    "LoRaWAN"
+  ]
+}

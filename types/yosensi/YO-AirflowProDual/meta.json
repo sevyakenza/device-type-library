@@ -1,0 +1,42 @@
+{
+  "name": "YO Airflow Pro Dual",
+  "version": "1.0.0",
+  "manufacturer": "Yosensi",
+  "url": "https://www.yosensi.io/products/yo_airflow_pro_dual/",
+  "description": "Sensor with two differential pressure sensors and two gas temperature inputs for air conditioning systems and blowers. Used to check air filter contamination and to control pressure in ventilation ducts.",
+  "author": "Maciej Sacewicz",
+  "firmwareVersion": "V3.6.2",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Differential Pressure",
+    "Gas Temperature"
+  ],
+  "outputTopics": [
+    "battery_voltage",
+    "internal_temperature",
+    "humidity",
+    "differential_pressure_1",
+    "differential_pressure_2",
+    "gas_temperature_1",
+    "gas_temperature_2"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Condition Monitoring"
+  ],
+  "keywords": [
+    "Yosensi",
+    "Airflow Pro Dual",
+    "differential pressure",
+    "air filter",
+    "ventilation",
+    "HVAC",
+    "duct",
+    "blower",
+    "gas temperature",
+    "humidity",
+    "LoRaWAN"
+  ]
+}

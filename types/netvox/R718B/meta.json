@@ -1,0 +1,37 @@
+{
+  "name": "R718B",
+  "version": "1.0.0",
+  "manufacturer": "Netvox",
+  "url": "http://www.netvox.com.tw/product.asp?pro=R718B",
+  "description": "Temperature sensor that connects an external PT1000 resistance temperature detector to measure temperature away from the housing. Used for monitoring fridges, freezers, pipes, liquids and industrial processes.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Temperature"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "system"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Cold Chain & Temperature Compliance"
+  ],
+  "keywords": [
+    "Netvox",
+    "R718B",
+    "temperature probe",
+    "PT1000",
+    "external probe",
+    "temperature",
+    "fridge",
+    "freezer",
+    "cold chain",
+    "pipe temperature",
+    "industrial process",
+    "RTD",
+    "LoRaWAN"
+  ]
+}

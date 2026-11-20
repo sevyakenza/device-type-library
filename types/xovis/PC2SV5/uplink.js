@@ -1,4 +1,5 @@
 function consume(event) {
+  const state = event.state || {};
   let data = {};
 
   if (event.data.live_data !== undefined) {
@@ -9,7 +10,7 @@ function consume(event) {
 
       // Ignore GROUP for now (redundant message)
       if (object === "PERSON") {
-        if (payload.events !== undefined) {
+        if (payload.events !== undefined && payload.events.length !== 0) {
           payload.events.forEach((ev) => {
             const { type } = ev;
             let topic = "default";
@@ -58,9 +59,14 @@ function consume(event) {
               data.direction = ev.attributes.counter_name;
               topic = "count";
             } else if (type === "TIME_CHANGE") {
-              data.queueTime = Math.round(ev.attributes.amount * 10) / 10;
-              data.counterValue = ev.attributes.counter_value;
-              topic = "queue_time";
+              let time = Math.round(ev.attributes.amount)
+              if (ev.attributes.counter_name === "queueing-time") {
+                data.queueTime = time;
+                topic = "queue_time";
+              } else if (ev.attributes.counter_name === "dwell_time") {
+                data.dwellTime = time;
+                topic = "dwell_time";
+              }
             }
             emit("sample", { data, topic, timestamp: time });
           });
@@ -72,6 +78,7 @@ function consume(event) {
           if (Object.keys(attributes).length > 0) {
             const { gender } = attributes;
             let { tag } = attributes;
+            let { age } = attributes;
             let faceMask = attributes.face_mask;
             const viewDirection = attributes.view_direction;
 
@@ -79,6 +86,12 @@ function consume(event) {
               emit("sample", {
                 data: { gender },
                 topic: "gender",
+              });
+            }
+            if (age !== undefined) {
+              emit("sample", {
+                data: { age },
+                topic: "age",
               });
             }
             if (tag !== undefined) {
@@ -133,6 +146,7 @@ function consume(event) {
     // Logic data
     const lineRegex = new RegExp("LINE");
     const queueRegex = new RegExp("QUEUE_STATISTICS");
+    const occupancyRegex = new RegExp("ZONE_OCCUPANCY");
     const payload = event.data.logics_data.logics;
 
     // Standart Forwards & Backwards
@@ -157,7 +171,17 @@ function consume(event) {
     let queueingTime = 0;
     let queueFlag = false;
 
-    let peopleInZone = 0;
+    // Zone occupancy
+    let balance = 0;
+    let visits = 0;
+    let dwellTime = 0;
+    let zoneOccupancyFlag = false;
+
+
+    // Age buckets addon
+    let fwAge = [];
+    let bwAge = [];
+
     let timestamp = new Date();
 
     payload.forEach((logic) => {
@@ -167,64 +191,92 @@ function consume(event) {
         record.counts.forEach((count) => {
           const { value } = count;
 
-          // Dont send empty samples
-          if (value > 0) {
-            if (lineRegex.test(logic.info)) {
-              // Line
-              switch (count.name) {
-                case "fw":
-                  fw += value;
-                  break;
-                case "bw":
-                  bw += value;
-                  break;
-                case "fw-male":
-                  fwMen += value;
-                  break;
-                case "bw-male":
-                  bwMen += value;
-                  break;
-                case "fw-female":
-                  fwWoman += value;
-                  break;
-                case "bw-female":
-                  bwWomen += value;
-                  break;
-                case "fw-mask":
-                  fwMask += value;
-                  break;
-                case "bw-mask":
-                  bwMask += value;
-                  break;
-                case "fw-no_mask":
-                  fwNoMask += value;
-                  break;
-                case "bw-no_mask":
-                  bwNoMask += value;
-                  break;
-                default:
-                  break;
-              }
-            } else if (queueRegex.test(logic.info)) {
-              const { name } = count;
-              switch (name) {
-                case "queue-length":
-                  queueLength = value;
-                  break;
-                case "outflow":
-                  outflow = value;
-                  break;
-                case "queueing-time":
-                  queueingTime = Math.round(value);
-                  break;
-                default:
-                  break;
-              }
-              queueFlag = true;
-            } else {
-              // Zone
-              peopleInZone += value;
+          if (lineRegex.test(logic.info)) {
+            // Line
+            switch (count.name) {
+              case "fw":
+                fw += value;
+                break;
+              case "bw":
+                bw += value;
+                break;
+              case "fw-male":
+                fwMen += value;
+                break;
+              case "bw-male":
+                bwMen += value;
+                break;
+              case "fw-female":
+                fwWoman += value;
+                break;
+              case "bw-female":
+                bwWomen += value;
+                break;
+              case "fw-mask":
+                fwMask += value;
+                break;
+              case "bw-mask":
+                bwMask += value;
+                break;
+              case "fw-no_mask":
+                fwNoMask += value;
+                break;
+              case "bw-no_mask":
+                bwNoMask += value;
+                break;
+              case "fw-age":
+                if (fwAge.length) {
+                  for (let i = 0; i < count.bins.length; i++) {
+                    fwAge[i] += count.bins[i];
+                  }
+                } else {
+                  fwAge = count.bins;
+                }
+                break;
+              case "bw-age":
+                if (bwAge.length) {
+                  for (let i = 0; i < count.bins.length; i++) {
+                    bwAge[i] += count.bins[i];
+                  }
+                } else {
+                  bwAge = count.bins;
+                }
+                break;
+              default:
+                break;
             }
+          } else if (queueRegex.test(logic.info)) {
+            const { name } = count;
+            switch (name) {
+              case "queue-length":
+                queueLength = value;
+                break;
+              case "outflow":
+                outflow = value;
+                break;
+              case "queueing-time":
+                queueingTime = Math.round(value);
+                break;
+              default:
+                break;
+            }
+            queueFlag = true;
+          } else if (occupancyRegex.test(logic.info)) {
+            const { name } = count;
+            switch (name) {
+              case "balance":
+                balance = value;
+                break;
+              case "visits":
+                visits = value;
+                break;
+              case "dwell_time":
+                dwellTime = Math.round(value);
+                break;
+              default:
+                break;
+            }
+            zoneOccupancyFlag = true;
           }
         });
       });
@@ -234,6 +286,24 @@ function consume(event) {
       emit("sample", {
         data: { fw, bw },
         topic: "line_count",
+        timestamp,
+      });
+    }
+
+    if (fwAge.reduce((accumulator, currentValue) => accumulator + currentValue, 0) > 0 ||
+      bwAge.reduce((accumulator, currentValue) => accumulator + currentValue, 0) > 0) {
+      let ageBucketSample = {};
+      for (let i = 0; i < fwAge.length; i++) {
+        ageBucketSample["bucketFw" + (i + 1)] = fwAge[i];
+      }
+
+      for (let i = 0; i < bwAge.length; i++) {
+        ageBucketSample["bucketBw" + (i + 1)] = bwAge[i];
+      }
+
+      emit("sample", {
+        data: ageBucketSample,
+        topic: "age_buckets",
         timestamp,
       });
     }
@@ -254,8 +324,22 @@ function consume(event) {
       });
     }
 
-    if (peopleInZone > 0) {
-      emit("sample", { data: { peopleInZone }, topic: "zone", timestamp });
+    if (zoneOccupancyFlag) {
+      if (state.lastVisits == undefined) {
+        state.lastVisits = 1;
+      }
+
+      // Should give out zero once
+      if (visits > 0 || visits != state.lastVisits) {
+        emit("sample", {
+          data: { peopleInZone: balance, visits, dwellTime },
+          topic: "zone",
+          timestamp,
+        });
+      }
+
+      state.lastVisits = visits;
+      emit("state", state);
     }
 
     if (queueFlag) {

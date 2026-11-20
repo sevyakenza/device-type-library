@@ -1,0 +1,42 @@
+{
+  "name": "Wireless Contact Sensor",
+  "version": "1.0.0",
+  "manufacturer": "Disruptive Technologies",
+  "url": "https://www.disruptive-technologies.com/products/wireless-sensors/wireless-proximity-sensor",
+  "description": "Contact sensor that detects whether an object or magnet is present in front of it and sends an event on each change. Used for door and window states, door counts and washroom usage, with a heartbeat every 15 minutes.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Contact",
+    "Touch"
+  ],
+  "outputTopics": [
+    "contact",
+    "door_count",
+    "touch",
+    "network_status",
+    "lifecycle",
+    "washroom_usage"
+  ],
+  "encoding": "JSON",
+  "connectivity": "HTTP",
+  "useCases": [
+    "Safety & Security",
+    "Facility Services & Feedback"
+  ],
+  "keywords": [
+    "Disruptive Technologies",
+    "DT",
+    "contact sensor",
+    "door sensor",
+    "window sensor",
+    "magnet",
+    "door counter",
+    "washroom usage",
+    "open close",
+    "touch",
+    "security",
+    "HTTP",
+    "cloud connector"
+  ]
+}

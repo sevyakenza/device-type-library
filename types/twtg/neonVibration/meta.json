@@ -1,0 +1,53 @@
+{
+  "name": "NEON Vibration Sensor",
+  "version": "1.0.0",
+  "manufacturer": "TWTG",
+  "url": "https://processautomation.imiplc.com/products/digital-and-iiot/vibration-monitoring/neon-vibration-sensor-imi-twtg",
+  "description": "Vibration sensor that detects changes of amplitude in the vibration spectrum of engines, conveyor belts and pumps. It sends alerts on deviations, so assets without constant supervision can be monitored around the clock.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V4.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Vibration"
+  ],
+  "outputTopics": [
+    "alert",
+    "axis_x",
+    "axis_y",
+    "axis_z",
+    "axis_x_spectrum",
+    "axis_y_spectrum",
+    "axis_z_spectrum",
+    "boot",
+    "configuration",
+    "deactivation",
+    "error",
+    "factory_reset",
+    "fragment",
+    "fragment_start",
+    "lifecycle",
+    "lifecycle_response",
+    "machine_fault",
+    "statistics",
+    "status"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Condition Monitoring"
+  ],
+  "keywords": [
+    "TWTG",
+    "NEON",
+    "NEON Vibration Sensor",
+    "vibration",
+    "predictive maintenance",
+    "vibration spectrum",
+    "accelerometer",
+    "pump",
+    "motor",
+    "conveyor belt",
+    "machine fault",
+    "LoRaWAN"
+  ]
+}

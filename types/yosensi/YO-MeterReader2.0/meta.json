@@ -1,0 +1,41 @@
+{
+  "name": "YO Meter Reader 2.0",
+  "version": "1.0.0",
+  "manufacturer": "Yosensi",
+  "url": "https://www.yosensi.io/products/yo_meter_reader_2.0/",
+  "description": "Battery-powered meter reader with an optical LED pulse detector that reports periodic and total pulse counts. Reports total consumption of electricity and other utility meters with LED pulse outputs for remote reading.",
+  "author": "Maciej Sacewicz",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Counter",
+    "Utilities Consumption"
+  ],
+  "outputTopics": [
+    "battery_voltage",
+    "internal_temperature",
+    "humidity",
+    "periodic_pulse_cnt",
+    "persistent_pulse_cnt",
+    "total_units"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Yosensi",
+    "Meter Reader 2.0",
+    "meter reader",
+    "optical reader",
+    "LED pulse",
+    "pulse counter",
+    "electricity meter",
+    "energy consumption",
+    "temperature",
+    "humidity",
+    "LoRaWAN"
+  ]
+}

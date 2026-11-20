@@ -1,0 +1,40 @@
+{
+  "name": "YO H2O",
+  "version": "1.0.0",
+  "manufacturer": "Yosensi",
+  "url": "https://www.yosensi.io/products/yo_h2o/",
+  "description": "Flood detector that reports immediately when water is detected and also measures temperature, humidity and acceleration. Placed on floors in basements, technical rooms or near pipes to detect leaks and flooding early.",
+  "author": "Maciej Sacewicz",
+  "firmwareVersion": "V3.6.6",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Flood Detection",
+    "Accelerometer"
+  ],
+  "outputTopics": [
+    "accelerometer",
+    "battery_voltage",
+    "flood_state",
+    "humidity",
+    "internal_temperature"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Leak Detection"
+  ],
+  "keywords": [
+    "Yosensi",
+    "YO H2O",
+    "flood detector",
+    "water leak",
+    "leak sensor",
+    "flooding",
+    "basement",
+    "technical room",
+    "temperature",
+    "humidity",
+    "LoRaWAN"
+  ]
+}

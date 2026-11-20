@@ -2,7 +2,7 @@ function strPad(byte) {
   const zero = "0";
   const hex = byte.toString(16);
   const tmp = 2 - hex.length;
-  return zero.substr(0, tmp) + hex;
+  return zero.substring(0, tmp) + hex;
 }
 
 function consume(event) {
@@ -23,6 +23,14 @@ function consume(event) {
       data.extTemperature = parseFloat(
         ((((bytes[4] << 24) >> 16) | bytes[5]) / 100).toFixed(2),
       );
+
+      if (((bytes[0] << 8) | bytes[1]) === 0xffff) {
+        data.temperature = null;
+      }
+
+      if (((bytes[4] << 8) | bytes[5]) === 0xffff) {
+        data.extTemperature = null;
+      }
 
       emit("sample", { data, topic: "default" });
     }

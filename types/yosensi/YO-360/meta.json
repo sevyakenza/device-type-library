@@ -1,0 +1,34 @@
+{
+  "name": "YO 360",
+  "version": "1.0.0",
+  "manufacturer": "Yosensi",
+  "url": "https://www.yosensi.io/products/yo_360/",
+  "description": "Sensor that measures temperature and humidity and reports its orientation on the X, Y and Z axes with a built-in accelerometer. Used for detecting position changes, tilting or movement of assets, covers and equipment.",
+  "author": "Maciej Sacewicz",
+  "firmwareVersion": "V3.6.1",
+  "availableSensors": ["Temperature", "Humidity", "Accelerometer"],
+  "outputTopics": [
+    "battery_voltage",
+    "internal_temperature",
+    "humidity",
+    "accelerometer"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Condition Monitoring"
+  ],
+  "keywords": [
+    "Yosensi",
+    "YO 360",
+    "tilt sensor",
+    "orientation",
+    "accelerometer",
+    "position change",
+    "movement",
+    "temperature",
+    "humidity",
+    "asset monitoring",
+    "LoRaWAN"
+  ]
+}

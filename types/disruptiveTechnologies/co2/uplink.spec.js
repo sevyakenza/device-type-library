@@ -1,27 +1,28 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Digital Technologies CO2 Sensor Uplink", () => {
-  let humiditySchema = null;
+  let defaultSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/humidity.schema.json`)
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/default.schema.json`)
       .then((parsedSchema) => {
-        humiditySchema = parsedSchema;
+        defaultSchema = parsedSchema;
         done();
       });
   });
 
   let co2Schema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/co2.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/co2.schema.json`).then((parsedSchema) => {
       co2Schema = parsedSchema;
       done();
     });
@@ -29,8 +30,7 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
 
   let pressureSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/pressure.schema.json`)
+    loadSchema(`${__dirname}/pressure.schema.json`)
       .then((parsedSchema) => {
         pressureSchema = parsedSchema;
         done();
@@ -38,7 +38,7 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
   });
 
   describe("consume()", () => {
-    it("should decode the Digital Technologies CO2 Sensor humidity payload", () => {
+    it("should decode the Digital Technologies CO2 Sensor default payload", () => {
       const data = {
         eventId: "c505kmuj0aoraraqu5g0",
         targetName:
@@ -55,16 +55,17 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
         timestamp: "2021-09-14T08:16:27.517331Z",
         labels: { name: "Temperature Simulator" },
       };
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
 
-        assert.equal(value.topic, "humidity");
+        assert.equal(value.topic, "default");
         assert.equal(value.data.temperature, 22.45);
+        assert.equal(value.data.temperatureF, 72.41);
         assert.equal(value.data.humidity, 17);
 
-        utils.validateSchema(value.data, humiditySchema, { throwError: true });
+        validateSchema(value.data, defaultSchema, { throwError: true });
       });
 
       consume(data);
@@ -85,7 +86,7 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
         },
         timestamp: "2022-09-28T14:06:41.604000Z",
       };
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -93,7 +94,7 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
         assert.equal(value.topic, "pressure");
         assert.equal(value.data.pressure, 94936);
 
-        utils.validateSchema(value.data, pressureSchema, { throwError: true });
+        validateSchema(value.data, pressureSchema, { throwError: true });
       });
 
       consume(data);
@@ -115,7 +116,7 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
         timestamp: "2022-09-28T14:06:41.604000Z",
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -123,7 +124,7 @@ describe("Digital Technologies CO2 Sensor Uplink", () => {
         assert.equal(value.topic, "co2");
         assert.equal(value.data.co2, 617);
 
-        utils.validateSchema(value.data, co2Schema, { throwError: true });
+        validateSchema(value.data, co2Schema, { throwError: true });
       });
 
       consume(data);

@@ -1,18 +1,19 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Yanzi Motion Plus Sensor Uplink", () => {
   let temperatureSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/temperature.schema.json`)
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/temperature.schema.json`)
       .then((parsedSchema) => {
         temperatureSchema = parsedSchema;
         done();
@@ -21,8 +22,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
 
   let humiditySchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/humidity.schema.json`)
+    loadSchema(`${__dirname}/humidity.schema.json`)
       .then((parsedSchema) => {
         humiditySchema = parsedSchema;
         done();
@@ -31,7 +31,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
 
   let lightSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/light.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/light.schema.json`).then((parsedSchema) => {
       lightSchema = parsedSchema;
       done();
     });
@@ -39,8 +39,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
 
   let occupancySchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/occupancy.schema.json`)
+    loadSchema(`${__dirname}/occupancy.schema.json`)
       .then((parsedSchema) => {
         occupancySchema = parsedSchema;
         done();
@@ -61,7 +60,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -69,7 +68,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         assert.equal(value.topic, "temperature");
         assert.equal(value.data.temperature, 29.21);
 
-        utils.validateSchema(value.data, temperatureSchema, {
+        validateSchema(value.data, temperatureSchema, {
           throwError: true,
         });
       });
@@ -90,7 +89,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -98,7 +97,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         assert.equal(value.topic, "humidity");
         assert.equal(value.data.humidity, 38.3);
 
-        utils.validateSchema(value.data, humiditySchema, { throwError: true });
+        validateSchema(value.data, humiditySchema, { throwError: true });
       });
 
       consume(data);
@@ -118,7 +117,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -126,7 +125,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         assert.equal(value.topic, "occupancy");
         assert.equal(value.data.motion, 7875);
 
-        utils.validateSchema(value.data, occupancySchema, { throwError: true });
+        validateSchema(value.data, occupancySchema, { throwError: true });
       });
 
       consume(data);
@@ -146,7 +145,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -155,7 +154,7 @@ describe("Yanzi Motion Plus Sensor Uplink", () => {
         assert.equal(value.data.light, 88.3);
         assert.equal(value.data.colorTemperature, 7518);
 
-        utils.validateSchema(value.data, lightSchema, { throwError: true });
+        validateSchema(value.data, lightSchema, { throwError: true });
       });
 
       consume(data);

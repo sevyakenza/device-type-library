@@ -1,0 +1,46 @@
+{
+  "name": "LW005-MP",
+  "version": "1.0.0",
+  "manufacturer": "MOKOSMART",
+  "url": "https://www.mokosmart.com/lorawan-meter-plug-lw005-mp/",
+  "description": "Plug that switches connected appliances remotely or by countdown and measures power and energy with ±0.5 % accuracy. Reports load state as well as overload, overvoltage, undervoltage and overcurrent events.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Power"
+  ],
+  "outputTopics": [
+    "countdown",
+    "energy",
+    "consumption",
+    "load_state",
+    "overcurrent",
+    "overload",
+    "overvoltage",
+    "power",
+    "switch",
+    "undervoltage"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering",
+    "Building Automation & Control"
+  ],
+  "keywords": [
+    "MOKO",
+    "MOKOSmart",
+    "LW005-MP",
+    "smart plug",
+    "socket",
+    "remote switching",
+    "power",
+    "energy",
+    "overload protection",
+    "overvoltage",
+    "overcurrent",
+    "countdown",
+    "LoRaWAN"
+  ]
+}

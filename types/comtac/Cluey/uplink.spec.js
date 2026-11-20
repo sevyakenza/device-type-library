@@ -1,18 +1,19 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Comtac Cluey Uplink", () => {
   let digitalInputsSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/digital_inputs.schema.json`)
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/digital_inputs.schema.json`)
       .then((parsedSchema) => {
         digitalInputsSchema = parsedSchema;
         done();
@@ -21,7 +22,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let eventSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/event.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/event.schema.json`).then((parsedSchema) => {
       eventSchema = parsedSchema;
       done();
     });
@@ -29,8 +30,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let lifecycleSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
+    loadSchema(`${__dirname}/lifecycle.schema.json`)
       .then((parsedSchema) => {
         lifecycleSchema = parsedSchema;
         done();
@@ -39,8 +39,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let pointInfoSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/point_info.schema.json`)
+    loadSchema(`${__dirname}/point_info.schema.json`)
       .then((parsedSchema) => {
         pointInfoSchema = parsedSchema;
         done();
@@ -49,8 +48,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let analogInput5Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/analog_input_5.schema.json`)
+    loadSchema(`${__dirname}/analog_input_5.schema.json`)
       .then((parsedSchema) => {
         analogInput5Schema = parsedSchema;
         done();
@@ -59,8 +57,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let analogInput6Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/analog_input_6.schema.json`)
+    loadSchema(`${__dirname}/analog_input_6.schema.json`)
       .then((parsedSchema) => {
         analogInput6Schema = parsedSchema;
         done();
@@ -69,8 +66,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let analogInput7Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/analog_input_7.schema.json`)
+    loadSchema(`${__dirname}/analog_input_7.schema.json`)
       .then((parsedSchema) => {
         analogInput7Schema = parsedSchema;
         done();
@@ -79,8 +75,7 @@ describe("Comtac Cluey Uplink", () => {
 
   let analogInput8Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/analog_input_8.schema.json`)
+    loadSchema(`${__dirname}/analog_input_8.schema.json`)
       .then((parsedSchema) => {
         analogInput8Schema = parsedSchema;
         done();
@@ -96,11 +91,11 @@ describe("Comtac Cluey Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -116,16 +111,16 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.overflow, false);
         assert.equal(value.data.value, 7907);
 
-        utils.validateSchema(value.data, analogInput5Schema, {
+        validateSchema(value.data, analogInput5Schema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -141,12 +136,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.overflow, false);
         assert.equal(value.data.value, 0);
 
-        utils.validateSchema(value.data, analogInput6Schema, {
+        validateSchema(value.data, analogInput6Schema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -154,12 +149,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.topic, "event");
         assert.equal(value.data.eventType, "AI_DATA");
 
-        utils.validateSchema(value.data, eventSchema, {
+        validateSchema(value.data, eventSchema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -174,7 +169,7 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.timeSynced, true);
         assert.equal(value.data.txCreditsConsumed, false);
 
-        utils.validateSchema(value.data, lifecycleSchema, {
+        validateSchema(value.data, lifecycleSchema, {
           throwError: true,
         });
       });
@@ -190,14 +185,14 @@ describe("Comtac Cluey Uplink", () => {
             "100128df5fee66011141000012410000134100001441000015410000164100001741000018410000",
         },
       };
-      const script = rewire("./uplink.js");
-      consume = utils.init(script);
+      const script = rewire(`${__dirname}/uplink.js`);
+      consume = init(script);
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -211,14 +206,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -232,14 +227,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -253,14 +248,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -274,14 +269,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -295,14 +290,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -316,14 +311,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -337,14 +332,14 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "log");
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -358,10 +353,10 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.limit, false);
         assert.equal(value.data.type, "SINGLE_POINT_INFO");
 
-        utils.validateSchema(value.data, pointInfoSchema, { throwError: true });
+        validateSchema(value.data, pointInfoSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -369,12 +364,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.topic, "event");
         assert.equal(value.data.eventType, "DI_DATA");
 
-        utils.validateSchema(value.data, eventSchema, {
+        validateSchema(value.data, eventSchema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -390,7 +385,7 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.timeSynced, false);
         assert.equal(value.data.txCreditsConsumed, false);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);
@@ -404,10 +399,10 @@ describe("Comtac Cluey Uplink", () => {
             "110304bc64c2376680000300000000000000000000000000000000000000005588000000568800000057880000005888000000",
         },
       };
-      const script = rewire("./uplink.js");
-      consume = utils.init(script);
+      const script = rewire(`${__dirname}/uplink.js`);
+      consume = init(script);
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -434,12 +429,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.digitalInput15, false);
         assert.equal(value.data.digitalInput16, false);
 
-        utils.validateSchema(value.data, digitalInputsSchema, {
+        validateSchema(value.data, digitalInputsSchema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -455,12 +450,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.overflow, false);
         assert.equal(value.data.value, 0);
 
-        utils.validateSchema(value.data, analogInput5Schema, {
+        validateSchema(value.data, analogInput5Schema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -476,12 +471,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.overflow, false);
         assert.equal(value.data.value, 0);
 
-        utils.validateSchema(value.data, analogInput6Schema, {
+        validateSchema(value.data, analogInput6Schema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -497,12 +492,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.overflow, false);
         assert.equal(value.data.value, 0);
 
-        utils.validateSchema(value.data, analogInput7Schema, {
+        validateSchema(value.data, analogInput7Schema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -518,12 +513,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.overflow, false);
         assert.equal(value.data.value, 0);
 
-        utils.validateSchema(value.data, analogInput8Schema, {
+        validateSchema(value.data, analogInput8Schema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -531,12 +526,12 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.topic, "event");
         assert.equal(value.data.eventType, "FIXED_DATA");
 
-        utils.validateSchema(value.data, eventSchema, {
+        validateSchema(value.data, eventSchema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -552,7 +547,7 @@ describe("Comtac Cluey Uplink", () => {
         assert.equal(value.data.timeSynced, true);
         assert.equal(value.data.txCreditsConsumed, false);
 
-        utils.validateSchema(value.data, lifecycleSchema, {
+        validateSchema(value.data, lifecycleSchema, {
           throwError: true,
         });
       });

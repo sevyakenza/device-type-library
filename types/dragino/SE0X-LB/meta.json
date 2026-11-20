@@ -1,0 +1,40 @@
+{
+  "name": "SE0X-LB",
+  "version": "1.0.0",
+  "manufacturer": "Dragino",
+  "url": "https://www.dragino.com/products/agriculture-weather-station/item/351-se0x-lb.html",
+  "description": "Soil sensor with up to four probes that measures soil moisture, soil temperature and electrical conductivity. Uses the FDR method with temperature and conductivity compensation and is factory calibrated for mineral soil.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Soil Temperature",
+    "Soil Humidity",
+    "Soil Conductivity"
+  ],
+  "outputTopics": [
+    "default",
+    "raw",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Smart Agriculture"
+  ],
+  "keywords": [
+    "Dragino",
+    "SE0X-LB",
+    "SE01-LB",
+    "soil sensor",
+    "soil moisture",
+    "soil temperature",
+    "soil conductivity",
+    "EC",
+    "FDR",
+    "multi-probe",
+    "irrigation",
+    "agriculture",
+    "LoRaWAN"
+  ]
+}

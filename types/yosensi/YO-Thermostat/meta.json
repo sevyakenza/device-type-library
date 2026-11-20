@@ -1,0 +1,51 @@
+{
+  "name": "YO Thermostat",
+  "version": "1.0.0",
+  "manufacturer": "Yosensi",
+  "url": "https://www.yosensi.io/products/yo_thermostat/",
+  "description": "Battery-powered thermostat that measures temperature, humidity, CO2 and illuminance and counts presence events. Controls heating with comfort, standby, economy and frost protection setpoints and several operation modes.",
+  "author": "Maciej Sacewicz",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "CO2",
+    "Infrared"
+  ],
+  "outputTopics": [
+    "battery_voltage",
+    "internal_temperature",
+    "humidity",
+    "co2",
+    "illuminance",
+    "presence_counter",
+    "comfort_setpoint",
+    "standby_offset",
+    "economy_offset",
+    "frost_prot_setpoint",
+    "operation_mode",
+    "get_parameters",
+    "output"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Building Automation & Control",
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Yosensi",
+    "YO Thermostat",
+    "thermostat",
+    "heating control",
+    "setpoint",
+    "frost protection",
+    "temperature",
+    "humidity",
+    "CO2",
+    "illuminance",
+    "presence",
+    "HVAC",
+    "LoRaWAN"
+  ]
+}

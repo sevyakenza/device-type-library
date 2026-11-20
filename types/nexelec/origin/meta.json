@@ -1,0 +1,42 @@
+{
+  "name": "Origin",
+  "version": "1.0.0",
+  "manufacturer": "nexelec",
+  "url": "https://nexelec.eu/en/store/origin/",
+  "description": "Smoke detector that reports smoke alarms and also measures indoor temperature and humidity. It combines fire safety with room climate monitoring in homes and buildings and has a battery life of 10 years.",
+  "firmwareVersion": "V1.0.0",
+  "author": "Akenza AG",
+  "availableSensors": [
+    "Smoke",
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "alarm",
+    "temperature",
+    "humidity",
+    "aggregation",
+    "lifecycle",
+    "system",
+    "datalog"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Safety & Security",
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Nexelec",
+    "Origin",
+    "smoke detector",
+    "smoke alarm",
+    "fire safety",
+    "temperature",
+    "humidity",
+    "fire alarm",
+    "room climate",
+    "10-year battery",
+    "LoRaWAN"
+  ]
+}

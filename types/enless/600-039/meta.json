@@ -1,0 +1,37 @@
+{
+  "name": "TX CONTACT 600-039",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/digital-input-sensor-dry-contact-lora/",
+  "description": "Contact sensor with two dry contact or open collector inputs that detects and reports status changes. Used for monitoring door openings and closures, equipment failure signals and other on/off states.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Digital Input",
+    "Pulse Input"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Safety & Security"
+  ],
+  "keywords": [
+    "Enless",
+    "TX CONTACT",
+    "600-039",
+    "contact sensor",
+    "dry contact",
+    "digital input",
+    "open collector",
+    "door sensor",
+    "equipment failure",
+    "on off status",
+    "LoRaWAN"
+  ]
+}

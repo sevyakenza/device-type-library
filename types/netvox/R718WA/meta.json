@@ -1,0 +1,33 @@
+{
+  "name": "R718WA",
+  "version": "1.0.0",
+  "manufacturer": "Netvox",
+  "url": "http://www.netvox.com.tw/product.asp?pro=R718WA",
+  "description": "Water leak detector that reports when water is detected at its sensing point. Placed on floors near pipes, water heaters, appliances or in technical and server rooms to detect leaks early and limit water damage.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Leak"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "system"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Leak Detection"
+  ],
+  "keywords": [
+    "Netvox",
+    "R718WA",
+    "water leak",
+    "leak detector",
+    "flood",
+    "water damage",
+    "server room",
+    "pipe leak",
+    "LoRaWAN"
+  ]
+}

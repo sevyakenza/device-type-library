@@ -1,0 +1,63 @@
+{
+  "name": "Airthings Cloud Connector",
+  "version": "1.0.0",
+  "manufacturer": "Airthings",
+  "url": "https://www.airthings.com/en/",
+  "description": "Cloud integration for indoor air quality sensors that measure radon, CO2, VOC, particulate matter, temperature, humidity, pressure, light, sound and occupancy. It also reports ventilation, mold and virus risk.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Pressure",
+    "CO2",
+    "Rel. Lighting",
+    "Sound",
+    "PM1.0",
+    "PM2.5",
+    "PM10",
+    "Occupancy",
+    "Radon",
+    "Ventilation",
+    "Virus risk",
+    "Mold risk"
+  ],
+  "outputTopics": [
+    "airly",
+    "environment",
+    "lifecycle",
+    "mold",
+    "occupancy",
+    "radon",
+    "ventilation",
+    "virus"
+  ],
+  "encoding": "JSON",
+  "connectivity": "HTTP",
+  "useCases": [
+    "Indoor Air Quality & Comfort",
+    "Occupancy & Space Utilization"
+  ],
+  "keywords": [
+    "Airthings",
+    "cloud connector",
+    "radon",
+    "air quality",
+    "CO2",
+    "VOC",
+    "PM2.5",
+    "PM1",
+    "PM10",
+    "temperature",
+    "humidity",
+    "pressure",
+    "light",
+    "sound level",
+    "occupancy",
+    "mold risk",
+    "virus risk",
+    "ventilation",
+    "API integration",
+    "HTTP"
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "R718LB",
+  "version": "1.0.0",
+  "manufacturer": "Netvox",
+  "url": "http://www.netvox.com.tw/product.asp?pro=R718LB",
+  "description": "Hall effect sensor that detects the open or closed state of doors, windows and hatches using a separate magnet. Each change of state is reported as an event, which supports access monitoring and security applications.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "Reed"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "system"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Safety & Security"
+  ],
+  "keywords": [
+    "Netvox",
+    "R718LB",
+    "door sensor",
+    "window sensor",
+    "hall effect",
+    "magnetic contact",
+    "open close",
+    "hatch",
+    "access monitoring",
+    "security",
+    "LoRaWAN"
+  ]
+}

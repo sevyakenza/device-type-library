@@ -13,6 +13,80 @@
         "type": "boolean"
       }
     },
+    "occupancy": {
+      "integer": {
+        "measurementType": "akenza/spaces/occupancy/integer",
+        "title": "Occupancy",
+        "description": "Space occupancy. 0 = Unoccupied / 1 = Occupied but movement detected / 2 = Occupied.",
+        "type": "integer",
+        "minimum": 0,
+        "maximum": 2,
+        "counterType": "categorical"
+      },
+      "percentFree": {
+        "measurementType": "akenza/spaces/occupancy/percentFree",
+        "title": "Percent free",
+        "description": "Percentage of currently available free space in the area",
+        "type": "number",
+        "unit": "%",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "percentOccupied": {
+        "measurementType": "akenza/spaces/occupancy/percentOccupied",
+        "title": "Percent occupied",
+        "description": "Percentage of space currently used in the area",
+        "type": "number",
+        "unit": "%",
+        "minimum": 0,
+        "maximum": 100
+      },
+      "occupancyStatus": {
+        "measurementType": "akenza/spaces/occupancy/occupancyStatus",
+        "title": "Occupancy status",
+        "description": "Occupancy status described as string",
+        "type": "string",
+        "enum": [
+          "OCCUPIED",
+          "FREE",
+          "WARM"
+        ]
+      }
+    },
+    "minutesSinceLastOccupied": {
+      "minutes": {
+        "measurementType": "akenza/spaces/minutesSinceLastOccupied/minutes",
+        "title": "Minutes since last occupied",
+        "description": "Minutes since last occupied value was registered",
+        "type": "integer",
+        "unit": "min"
+      }
+    },
+    "occupiedMinutes": {
+      "minutes": {
+        "measurementType": "akenza/spaces/occupiedMinutes/minutes",
+        "title": "Minutes occupied since",
+        "description": "Minutes since occupancy start",
+        "type": "integer",
+        "unit": "min"
+      }
+    },
+    "warm": {
+      "boolean": {
+        "measurementType": "akenza/spaces/warm/boolean",
+        "title": "Warm",
+        "description": "Whether the space has been used recently",
+        "type": "boolean"
+      }
+    },
+    "occupiedOrWarm": {
+      "boolean": {
+        "measurementType": "akenza/spaces/occupiedOrWarm/boolean",
+        "title": "Occupied or warm",
+        "description": "Whether the space has been used recently or is occupied at the moment.",
+        "type": "boolean"
+      }
+    },
     "motion": {
       "count": {
         "measurementType": "akenza/spaces/motion/count",
@@ -29,7 +103,8 @@
         "description": "People moving into the area",
         "type": "integer",
         "unit": "people",
-        "minimum": 0
+        "minimum": 0,
+        "counterType": "delta"
       }
     },
     "peopleOut": {
@@ -39,7 +114,8 @@
         "description": "People moving out of the area",
         "type": "integer",
         "unit": "people",
-        "minimum": 0
+        "minimum": 0,
+        "counterType": "delta"
       }
     },
     "peopleCount": {
@@ -49,6 +125,23 @@
         "description": "People in the area",
         "type": "integer",
         "unit": "people",
+        "minimum": 0,
+        "counterType": "gauge"
+      }
+    },
+    "usage": {
+      "count": {
+        "measurementType": "akenza/spaces/usage/count",
+        "title": "Usage count",
+        "description": "Usage count of spaces",
+        "type": "integer",
+        "minimum": 0
+      },
+      "doorClosings": {
+        "measurementType": "akenza/spaces/usage/doorClosings",
+        "title": "Door closing",
+        "description": "Each door opening and closing counts as one door closing",
+        "type": "integer",
         "minimum": 0
       }
     }

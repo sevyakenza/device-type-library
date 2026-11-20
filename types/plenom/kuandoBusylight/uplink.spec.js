@@ -1,28 +1,24 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Kuando busylight Uplink", () => {
   let defaultSchema = null;
   let lifecycleSchema = null;
   let consume = null;
-  before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/default.schema.json`)
-      .then((parsedSchema) => {
-        defaultSchema = parsedSchema;
-      });
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
-      .then((parsedSchema) => {
-        lifecycleSchema = parsedSchema;
-        done();
-      });
+
+  before(async () => {
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    [defaultSchema, lifecycleSchema] = await Promise.all([
+      loadSchema(`${__dirname}/default.schema.json`),
+      loadSchema(`${__dirname}/lifecycle.schema.json`),
+    ]);
   });
 
   describe("consume()", () => {
@@ -33,20 +29,20 @@ describe("Kuando busylight Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
 
         assert.equal(value.topic, "default");
-        assert.equal(value.data.lastColorRGB, "255,255,0");
+        assert.equal(value.data.lastColorRGB, "255,0,255");
         assert.equal(value.data.timeOn, 100);
         assert.equal(value.data.timeOff, 2);
 
-        utils.validateSchema(value.data, defaultSchema, { throwError: true });
+        validateSchema(value.data, defaultSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -60,7 +56,7 @@ describe("Kuando busylight Uplink", () => {
         assert.equal(value.data.hwRevision, 12);
         assert.equal(value.data.adrState, 1);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);

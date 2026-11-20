@@ -1,0 +1,37 @@
+{
+  "name": "TX T&H AMB 600-021",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/ambient-temperature-humidity-sensor-lora/",
+  "description": "Indoor sensor that measures ambient temperature and humidity in commercial and residential buildings. Used for occupant comfort and heating restart optimization in offices, schools and public buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Enless",
+    "TX T&H AMB",
+    "600-021",
+    "temperature",
+    "humidity",
+    "room climate",
+    "comfort",
+    "heating optimization",
+    "office",
+    "school",
+    "LoRaWAN"
+  ]
+}

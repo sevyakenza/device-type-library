@@ -1,0 +1,41 @@
+{
+  "name": "TX LIGHT PIR T&H 600-062",
+  "version": "1.0.0",
+  "manufacturer": "Enless Wireless",
+  "url": "https://enless-wireless.com/products/lorawan-light-presence-sensor/",
+  "description": "Indoor sensor that measures light, presence, temperature and humidity in a room. Used for occupant comfort, occupancy detection and energy efficiency in commercial and residential buildings.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.01.18",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Luminosity",
+    "Presence"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "alarm"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort",
+    "Occupancy & Space Utilization"
+  ],
+  "keywords": [
+    "Enless",
+    "TX LIGHT PIR",
+    "600-062",
+    "PIR",
+    "presence detection",
+    "light",
+    "luminosity",
+    "temperature",
+    "humidity",
+    "occupancy",
+    "energy efficiency",
+    "LoRaWAN"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "YO Distance",
+  "version": "1.0.0",
+  "manufacturer": "Yosensi",
+  "url": "https://www.yosensi.io/products/yo_distance/",
+  "description": "Ultrasonic distance sensor that also measures temperature, humidity and acceleration. Used for fill level measurement in tanks, bins and containers, where the distance to the surface indicates the current level.",
+  "author": "Maciej Sacewicz",
+  "firmwareVersion": "V3.6.5",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Distance",
+    "Accelerometer"
+  ],
+  "outputTopics": [
+    "battery_voltage",
+    "internal_temperature",
+    "humidity",
+    "accelerometer",
+    "distance"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Fill Level Monitoring"
+  ],
+  "keywords": [
+    "Yosensi",
+    "YO Distance",
+    "ultrasonic",
+    "distance",
+    "fill level",
+    "tank level",
+    "waste bin",
+    "container",
+    "temperature",
+    "humidity",
+    "accelerometer",
+    "LoRaWAN"
+  ]
+}

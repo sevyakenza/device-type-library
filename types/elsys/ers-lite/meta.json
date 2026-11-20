@@ -1,14 +1,36 @@
 {
-  "name": "ERS Lite",
+  "name": "ERS Lite LoRa",
   "version": "1.0.0",
   "manufacturer": "Elsys",
-  "url": "https://www.elsys.se/en/ers-lite/",
-  "description": "ERS is a sensor for simple and easy environment measuring. It measures temperature and humidity.",
+  "url": "https://www.elsys.se/en/eco/",
+  "description": "Indoor sensor that measures room temperature and relative humidity. Used for basic room climate monitoring and comfort optimization in offices, schools, residential and commercial buildings.",
   "author": "Akenza AG",
   "firmwareVersion": "V2.3.5",
   "loraDeviceClass": "A",
-  "availableSensors": ["Humidity", "Temperature"],
-  "outputTopics": ["default", "lifecycle", "configuration"],
+  "availableSensors": [
+    "Humidity",
+    "Temperature"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "configuration"
+  ],
   "encoding": "HEX",
-  "connectivity": "LORA"
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Elsys",
+    "ERS Lite",
+    "ERS",
+    "temperature",
+    "humidity",
+    "room climate",
+    "comfort",
+    "office",
+    "school",
+    "LoRaWAN"
+  ]
 }

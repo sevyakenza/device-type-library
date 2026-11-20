@@ -1,0 +1,50 @@
+{
+  "name": "LW001-BG PRO",
+  "version": "1.0.0",
+  "manufacturer": "MOKOSMART",
+  "url": "https://www.mokosmart.com/lorawan-tracker-lw001-bg-pro/",
+  "description": "Tracker that combines GPS and Bluetooth positioning for indoor and outdoor location and also measures temperature. A 3-axis accelerometer supports motion, vibration, man-down and tamper detection in several modes.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "GPS"
+  ],
+  "outputTopics": [
+    "bluetooth",
+    "fix_failure",
+    "gps",
+    "lifecycle",
+    "mandown",
+    "movement",
+    "reboot",
+    "shutdown",
+    "system",
+    "tamper",
+    "time",
+    "vibration",
+    "wifi"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Asset Tracking"
+  ],
+  "keywords": [
+    "MOKO",
+    "MOKOSmart",
+    "LW001-BG PRO",
+    "tracker",
+    "GPS",
+    "BLE",
+    "indoor positioning",
+    "accelerometer",
+    "man down",
+    "tamper",
+    "vibration",
+    "temperature",
+    "lone worker",
+    "LoRaWAN"
+  ]
+}

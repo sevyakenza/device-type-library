@@ -1,0 +1,39 @@
+{
+  "name": "S31LB-LS",
+  "version": "1.0.0",
+  "manufacturer": "Dragino",
+  "url": "https://www.dragino.com/products/temperature-humidity-sensor/item/264-s31-lb-ls.html",
+  "description": "Waterproof sensor with an SHT31 probe that measures environmental temperature and humidity. Supports threshold alarms and offline datalogging and runs up to five years on an 8500 mAh battery.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "config"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Cold Chain & Temperature Compliance",
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Dragino",
+    "S31LB-LS",
+    "S31-LB",
+    "SHT31",
+    "temperature",
+    "humidity",
+    "waterproof",
+    "threshold alarm",
+    "datalog",
+    "fridge",
+    "cold room",
+    "LoRaWAN"
+  ]
+}

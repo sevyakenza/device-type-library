@@ -1,0 +1,46 @@
+{
+  "name": "ELT Internal antenna LoRa",
+  "version": "1.0.0",
+  "manufacturer": "Elsys",
+  "url": "https://www.elsys.se/en/elt-internal-antenna/",
+  "description": "Multipurpose device in an IP67 enclosure with two inputs for external sensors such as probes, pulse counters, 0-10 V analog signals and leak sensors. It also measures temperature, humidity, acceleration and pressure.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V2.3.5",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "Analog",
+    "Pulse Input",
+    "Distance",
+    "Motion",
+    "Leak",
+    "Pressure"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "configuration"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Energy & Utility Metering"
+  ],
+  "keywords": [
+    "Elsys",
+    "ELT-2i",
+    "ELT",
+    "internal antenna",
+    "external input",
+    "analog input",
+    "pulse counter",
+    "0-10 V",
+    "temperature",
+    "humidity",
+    "pressure",
+    "water leak",
+    "IP67",
+    "LoRaWAN"
+  ]
+}

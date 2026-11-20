@@ -1,0 +1,33 @@
+{
+  "name": "NFS-M8-QM-D2-N16 IO-Link Master",
+  "version": "1.0.0",
+  "manufacturer": "Hilscher",
+  "url": "https://www.hilscher.com/de/produkte/edge-gateways-mit-container-management/nfs-m8-qm-d2-n16-nfld",
+  "description": "Edge IO-Link master with remote management that connects up to 8 IO-Link sensors and reports system monitoring data. Used for industrial machine and process monitoring and runs containerized apps on the device.",
+  "author": "Akenza AG",
+  "outputTopics": [
+    "system_monitoring"
+  ],
+  "availableSensors": [
+    "IO"
+  ],
+  "encoding": "JSON",
+  "connectivity": "MQTT",
+  "useCases": [
+    "Condition Monitoring"
+  ],
+  "keywords": [
+    "Hilscher",
+    "NFS-M8-QM-D2-N16",
+    "netFIELD",
+    "IO-Link master",
+    "edge gateway",
+    "industrial monitoring",
+    "machine monitoring",
+    "process monitoring",
+    "system monitoring",
+    "containerized apps",
+    "Industry 4.0",
+    "MQTT"
+  ]
+}

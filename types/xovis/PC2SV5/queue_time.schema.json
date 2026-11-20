@@ -11,15 +11,9 @@
       "description": "Queue time",
       "type": "number",
       "unit": "s"
-    },
-    "counterValue": {
-      "title": "Counter value",
-      "description": "Counter value",
-      "type": "number"
     }
   },
   "required": [
-    "queueTime",
-    "counterValue"
+    "queueTime"
   ]
 }

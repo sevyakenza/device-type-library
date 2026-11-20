@@ -1,0 +1,40 @@
+{
+  "name": "WT201",
+  "version": "1.0.0",
+  "manufacturer": "Milesight",
+  "url": "https://www.milesight-iot.com/lorawan/sensor/wt201/",
+  "description": "Thermostat for HVAC systems that measures room temperature and controls heating, cooling and fan operation. Replaces conventional wall thermostats and supports remote control, schedules and alerts.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature"
+  ],
+  "outputTopics": [
+    "alert",
+    "default",
+    "downlink_response",
+    "plan_setting",
+    "plan",
+    "system",
+    "wires"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Building Automation & Control"
+  ],
+  "keywords": [
+    "Milesight",
+    "WT201",
+    "thermostat",
+    "HVAC",
+    "heating",
+    "cooling",
+    "fan control",
+    "temperature",
+    "setpoint",
+    "schedule",
+    "LoRaWAN"
+  ]
+}

@@ -1,18 +1,19 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Xovis V5 Uplink", () => {
   let lineCountSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/line_count.schema.json`)
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/line_count.schema.json`)
       .then((parsedSchema) => {
         lineCountSchema = parsedSchema;
         done();
@@ -21,8 +22,7 @@ describe("Xovis V5 Uplink", () => {
 
   let lifecycleSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
+    loadSchema(`${__dirname}/lifecycle.schema.json`)
       .then((parsedSchema) => {
         lifecycleSchema = parsedSchema;
         done();
@@ -31,7 +31,7 @@ describe("Xovis V5 Uplink", () => {
 
   let countSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/count.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/count.schema.json`).then((parsedSchema) => {
       countSchema = parsedSchema;
       done();
     });
@@ -39,7 +39,7 @@ describe("Xovis V5 Uplink", () => {
 
   let trackSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/track.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/track.schema.json`).then((parsedSchema) => {
       trackSchema = parsedSchema;
       done();
     });
@@ -47,8 +47,7 @@ describe("Xovis V5 Uplink", () => {
 
   let faceMaskSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/face_mask.schema.json`)
+    loadSchema(`${__dirname}/face_mask.schema.json`)
       .then((parsedSchema) => {
         faceMaskSchema = parsedSchema;
         done();
@@ -57,7 +56,7 @@ describe("Xovis V5 Uplink", () => {
 
   let genderSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/gender.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/gender.schema.json`).then((parsedSchema) => {
       genderSchema = parsedSchema;
       done();
     });
@@ -65,7 +64,7 @@ describe("Xovis V5 Uplink", () => {
 
   let tagSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/tag.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/tag.schema.json`).then((parsedSchema) => {
       tagSchema = parsedSchema;
       done();
     });
@@ -73,8 +72,7 @@ describe("Xovis V5 Uplink", () => {
 
   let viewDirectionSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/view_direction.schema.json`)
+    loadSchema(`${__dirname}/view_direction.schema.json`)
       .then((parsedSchema) => {
         viewDirectionSchema = parsedSchema;
         done();
@@ -83,7 +81,7 @@ describe("Xovis V5 Uplink", () => {
 
   let queueSchema = null;
   before((done) => {
-    utils.loadSchema(`${__dirname}/queue.schema.json`).then((parsedSchema) => {
+    loadSchema(`${__dirname}/queue.schema.json`).then((parsedSchema) => {
       queueSchema = parsedSchema;
       done();
     });
@@ -91,13 +89,40 @@ describe("Xovis V5 Uplink", () => {
 
   let queueTimeSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/queue_time.schema.json`)
+    loadSchema(`${__dirname}/queue_time.schema.json`)
       .then((parsedSchema) => {
         queueTimeSchema = parsedSchema;
         done();
       });
   });
+
+  let ageSchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/age.schema.json`)
+      .then((parsedSchema) => {
+        ageSchema = parsedSchema;
+        done();
+      });
+  });
+
+  let zoneSchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/zone.schema.json`)
+      .then((parsedSchema) => {
+        zoneSchema = parsedSchema;
+        done();
+      });
+  });
+
+  let dwellTimeSchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/dwell_time.schema.json`)
+      .then((parsedSchema) => {
+        dwellTimeSchema = parsedSchema;
+        done();
+      });
+  });
+
 
   describe("consume()", () => {
     it("should decode the Xovis V5 event payload", () => {
@@ -140,7 +165,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -149,7 +174,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 0);
         assert.equal(value.data.bw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
       consume(data);
@@ -250,7 +275,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -263,7 +288,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.timeStatus, "OK");
         assert.equal(value.data.updateStatus, "OK");
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);
@@ -425,7 +450,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -434,7 +459,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 4);
         assert.equal(value.data.bw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
       consume(data);
@@ -596,7 +621,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -605,7 +630,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 1);
         assert.equal(value.data.bw, 0);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
       consume(data);
@@ -826,7 +851,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -835,10 +860,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 0);
         assert.equal(value.data.bw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -847,10 +872,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 0);
         assert.equal(value.data.bw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -859,10 +884,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 1);
         assert.equal(value.data.bw, 0);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -871,7 +896,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 1);
         assert.equal(value.data.bw, 0);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
       consume(data);
@@ -3562,7 +3587,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3572,10 +3597,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1128);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3586,10 +3611,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1128);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3598,10 +3623,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 0);
         assert.equal(value.data.bw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3611,10 +3636,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.countType, "COUNT_INCREMENT");
         assert.equal(value.data.logicName, "Zone 0");
 
-        utils.validateSchema(value.data, countSchema, { throwError: true });
+        validateSchema(value.data, countSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3624,10 +3649,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1105);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3637,10 +3662,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1129);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3651,10 +3676,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1129);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3663,10 +3688,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 0);
         assert.equal(value.data.bw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3676,10 +3701,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.countType, "COUNT_INCREMENT");
         assert.equal(value.data.logicName, "Zone 0");
 
-        utils.validateSchema(value.data, countSchema, { throwError: true });
+        validateSchema(value.data, countSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3689,10 +3714,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1106);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3702,10 +3727,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1130);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3716,10 +3741,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1130);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3729,10 +3754,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.countType, "COUNT_INCREMENT");
         assert.equal(value.data.logicName, "Zone 0");
 
-        utils.validateSchema(value.data, countSchema, { throwError: true });
+        validateSchema(value.data, countSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3743,10 +3768,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1130);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3755,10 +3780,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.fw, 1);
         assert.equal(value.data.bw, 0);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3767,12 +3792,12 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.countType, "COUNT_DECREMENT");
         assert.equal(value.data.logicName, "Zone 0");
 
-        utils.validateSchema(value.data, countSchema, {
+        validateSchema(value.data, countSchema, {
           throwError: true,
         });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3782,10 +3807,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1107);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3796,7 +3821,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.trackId, 1107);
         assert.equal(value.data.sequenceNumber, 0);
 
-        utils.validateSchema(value.data, trackSchema, { throwError: true });
+        validateSchema(value.data, trackSchema, { throwError: true });
       });
 
       consume(data);
@@ -3849,7 +3874,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3857,10 +3882,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.topic, "gender");
         assert.equal(value.data.gender, "MALE");
 
-        utils.validateSchema(value.data, genderSchema, { throwError: true });
+        validateSchema(value.data, genderSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3868,10 +3893,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.topic, "tag");
         assert.equal(value.data.tag, false);
 
-        utils.validateSchema(value.data, tagSchema, { throwError: true });
+        validateSchema(value.data, tagSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3879,10 +3904,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.topic, "face_mask");
         assert.equal(value.data.faceMask, false);
 
-        utils.validateSchema(value.data, faceMaskSchema, { throwError: true });
+        validateSchema(value.data, faceMaskSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3891,7 +3916,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.xCoordinate, 0.497341);
         assert.equal(value.data.yCoordinate, -0.867555);
 
-        utils.validateSchema(value.data, viewDirectionSchema, {
+        validateSchema(value.data, viewDirectionSchema, {
           throwError: true,
         });
       });
@@ -3941,7 +3966,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -3952,7 +3977,7 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.countType, "COUNT_INCREMENT");
         assert.equal(value.data.logicName, "Line-based logic 2");
 
-        utils.validateSchema(value.data, countSchema, { throwError: true });
+        validateSchema(value.data, countSchema, { throwError: true });
       });
 
       consume(data);
@@ -4049,7 +4074,7 @@ describe("Xovis V5 Uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -4058,10 +4083,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.bw, 0);
         assert.equal(value.data.fw, 1);
 
-        utils.validateSchema(value.data, lineCountSchema, { throwError: true });
+        validateSchema(value.data, lineCountSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -4072,10 +4097,10 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.bwMen, 0);
         assert.equal(value.data.bwWomen, 0);
 
-        utils.validateSchema(value.data, genderSchema, { throwError: true });
+        validateSchema(value.data, genderSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -4086,154 +4111,500 @@ describe("Xovis V5 Uplink", () => {
         assert.equal(value.data.bwMask, 0);
         assert.equal(value.data.bwNoMask, 0);
 
-        utils.validateSchema(value.data, faceMaskSchema, { throwError: true });
+        validateSchema(value.data, faceMaskSchema, { throwError: true });
       });
 
       consume(data);
     });
-  });
 
-  it("should decode the Xovis V5 logic queue statistic payload", () => {
-    const data = {
-      data: {
-        logics_data: {
-          package_info: {
-            version: "5.0",
-            id: 71,
-            agent_id: 1001,
-          },
-          sensor_info: {
-            serial_number: "00:6E:02:00:6D:BC",
-            type: "SINGLE_SENSOR",
-          },
-          logics: [
-            {
-              id: 1000,
-              name: "Queue statistics 1",
-              info: "XLT_QUEUE_STATISTICS",
-              geometries: [
-                {
-                  id: 1000,
-                  type: "ZONE",
-                  name: "Zone 1",
-                },
-              ],
-              records: [
-                {
-                  from: 1720000500000,
-                  to: 1720000560000,
-                  samples: 1,
-                  samples_expected: 1,
-                  counts: [
-                    {
-                      id: 1000001,
-                      name: "queue-length",
-                      value: 0,
-                    },
-                    {
-                      id: 1000002,
-                      name: "outflow",
-                      value: 8,
-                    },
-                    {
-                      id: 1000003,
-                      name: "queueing-time",
-                      value: 124.426003,
-                      unit: "seconds",
-                    },
-                  ],
-                },
-              ],
+    it("should decode the Xovis V5 logic queue statistic payload", () => {
+      const data = {
+        data: {
+          logics_data: {
+            package_info: {
+              version: "5.0",
+              id: 71,
+              agent_id: 1001,
             },
-          ],
+            sensor_info: {
+              serial_number: "00:6E:02:00:6D:BC",
+              type: "SINGLE_SENSOR",
+            },
+            logics: [
+              {
+                id: 1000,
+                name: "Queue statistics 1",
+                info: "XLT_QUEUE_STATISTICS",
+                geometries: [
+                  {
+                    id: 1000,
+                    type: "ZONE",
+                    name: "Zone 1",
+                  },
+                ],
+                records: [
+                  {
+                    from: 1720000500000,
+                    to: 1720000560000,
+                    samples: 1,
+                    samples_expected: 1,
+                    counts: [
+                      {
+                        id: 1000001,
+                        name: "queue-length",
+                        value: 0,
+                      },
+                      {
+                        id: 1000002,
+                        name: "outflow",
+                        value: 8,
+                      },
+                      {
+                        id: 1000003,
+                        name: "queueing-time",
+                        value: 124.426003,
+                        unit: "seconds",
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
         },
-      },
-    };
+      };
 
-    utils.expectEmits((type, value) => {
-      assert.equal(type, "sample");
-      assert.isNotNull(value);
-      assert.typeOf(value.data, "object");
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
 
-      assert.equal(value.topic, "queue");
-      assert.equal(value.data.outflow, 8);
-      assert.equal(value.data.queueingTime, 124);
-      assert.equal(value.data.queueLength, 0);
+        assert.equal(value.topic, "queue");
+        assert.equal(value.data.outflow, 8);
+        assert.equal(value.data.queueingTime, 124);
+        assert.equal(value.data.queueLength, 0);
 
-      utils.validateSchema(value.data, queueSchema, { throwError: true });
+        validateSchema(value.data, queueSchema, { throwError: true });
+      });
+
+      consume(data);
     });
 
-    consume(data);
-  });
-
-  it("should decode the Xovis V5 logic queue statistic payload", () => {
-    const data = {
-      state: {},
-      data: {
-        live_data: {
-          package_info: {
-            version: "5.0",
-            id: 6,
-            agent_id: 1002,
-          },
-          sensor_info: {
-            serial_number: "00:6E:02:01:AB:7C",
-            type: "MULTI_SENSOR",
-            multisensor_id: 1,
-            alignment_id: "ea49f0ddcafc4a97e28553debdaf0315614e4700",
-            id: "97:4A:FC:CA:DD:F0",
-          },
-          frames: [
-            {
-              framenumber: 31757307,
-              frametype: "FULL",
-              time: 1725001494320,
-              tracked_objects: [
-                {
-                  track_id: 57060,
-                  type: "PERSON",
-                  position: [-0.254185, 2.785019, 1.435505],
-                  attributes: {
-                    person_height: 1.464321,
-                    members: 0,
-                    members_with_tag: 0,
-                  },
-                },
-              ],
-              events: [
-                {
-                  category: "COUNT",
-                  type: "TIME_CHANGE",
-                  attributes: {
+    it("should decode the Xovis V5 logic queue statistic payload", () => {
+      const data = {
+        state: {},
+        data: {
+          live_data: {
+            package_info: {
+              version: "5.0",
+              id: 6,
+              agent_id: 1002,
+            },
+            sensor_info: {
+              serial_number: "00:6E:02:01:AB:7C",
+              type: "MULTI_SENSOR",
+              multisensor_id: 1,
+              alignment_id: "ea49f0ddcafc4a97e28553debdaf0315614e4700",
+              id: "97:4A:FC:CA:DD:F0",
+            },
+            frames: [
+              {
+                framenumber: 31757307,
+                frametype: "FULL",
+                time: 1725001494320,
+                tracked_objects: [
+                  {
                     track_id: 57060,
-                    counter_id: 1000003,
-                    unit: "seconds",
-                    amount: 4.202,
-                    counter_value: 10.922001,
-                    logic_id: 1000,
-                    logic_name: "Queue statistics 1",
-                    counter_name: "queueing-time",
+                    type: "PERSON",
+                    position: [-0.254185, 2.785019, 1.435505],
+                    attributes: {
+                      person_height: 1.464321,
+                      members: 0,
+                      members_with_tag: 0,
+                    },
                   },
-                },
-              ],
-            },
-          ],
+                ],
+                events: [
+                  {
+                    category: "COUNT",
+                    type: "TIME_CHANGE",
+                    attributes: {
+                      track_id: 57060,
+                      counter_id: 1000003,
+                      unit: "seconds",
+                      amount: 4.202,
+                      counter_value: 10.922001,
+                      logic_id: 1000,
+                      logic_name: "Queue statistics 1",
+                      counter_name: "queueing-time",
+                    },
+                  },
+                ],
+              },
+            ],
+          },
         },
-      },
-    };
+      };
 
-    utils.expectEmits((type, value) => {
-      assert.equal(type, "sample");
-      assert.isNotNull(value);
-      assert.typeOf(value.data, "object");
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
 
-      assert.equal(value.topic, "queue_time");
-      assert.equal(value.data.counterValue, 10.922001);
-      assert.equal(value.data.queueTime, 4.2);
+        assert.equal(value.topic, "queue_time");
+        assert.equal(value.data.queueTime, 4);
 
-      utils.validateSchema(value.data, queueTimeSchema, { throwError: true });
+        validateSchema(value.data, queueTimeSchema, { throwError: true });
+      });
+
+      consume(data);
     });
 
-    consume(data);
+    it("should decode the Xovis V5 new addons", () => {
+      const data = {
+        data: {
+          "live_data": {
+            "frames": [
+              {
+                "framenumber": 5361973,
+                "frametype": "FULL",
+                "time": 1759748596284,
+                "illumination": "SUFFICIENT",
+                "tracked_objects": [
+                  {
+                    "track_id": 82,
+                    "type": "PERSON",
+                    "position": [
+                      -0.67,
+                      -1.56,
+                      1.76
+                    ],
+                    "attributes": {
+                      "person_height": 1.8,
+                      "age": 40,
+                      "gender": "NOT_SURE",
+                      "tag": "NO_TAG",
+                      "face_mask": "NO_MASK",
+                      "view_direction": [
+                        -0.201882,
+                        -0.97941
+                      ]
+                    }
+                  },
+                  {
+                    "track_id": 2147483724,
+                    "type": "GROUP",
+                    "position": [
+                      -0.02,
+                      0.81,
+                      1.79
+                    ],
+                    "attributes": {
+                      "tag": "NO_TAG",
+                      "members": 1,
+                      "members_with_tag": 0
+                    }
+                  }
+                ],
+                "events": []
+              }
+            ],
+            "package_info": {
+              "agent_id": 1029,
+              "id": 469,
+              "version": "5.0"
+            },
+            "sensor_info": {
+              "serial_number": "80:1F:12:D5:30:DC",
+              "type": "SINGLE_SENSOR"
+            }
+          }
+        },
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "gender");
+        assert.equal(value.data.gender, "NOT_SURE");
+
+        validateSchema(value.data, genderSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "age");
+        assert.equal(value.data.age, 40);
+
+        validateSchema(value.data, ageSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "tag");
+        assert.equal(value.data.tag, false);
+
+        validateSchema(value.data, tagSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "face_mask");
+        assert.equal(value.data.faceMask, false);
+
+        validateSchema(value.data, faceMaskSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "view_direction");
+        assert.equal(value.data.xCoordinate, -0.201882);
+        assert.equal(value.data.yCoordinate, -0.97941);
+
+        validateSchema(value.data, viewDirectionSchema, { throwError: true });
+      });
+
+      consume(data);
+    });
+
+    it("should decode the Xovis V5 line + gender bucket payload", () => {
+      const data = {
+        data: {
+          "logics_data": {
+            "logics": [
+              {
+                "id": 4,
+                "name": "Line-based logic 2",
+                "info": "XLT_LINE_IN_OUT_COUNT",
+                "geometries": [
+                  {
+                    "id": 2,
+                    "type": "LINE",
+                    "name": "Line 0"
+                  }
+                ],
+                "records": [
+                  {
+                    "from": 1783497240000,
+                    "to": 1783497300000,
+                    "samples": 1,
+                    "samples_expected": 1,
+                    "counts": [
+                      {
+                        "id": 6,
+                        "name": "fw",
+                        "value": 0
+                      },
+                      {
+                        "id": 7,
+                        "name": "bw",
+                        "value": 1
+                      },
+                      {
+                        "id": 4003,
+                        "name": "fw-male",
+                        "value": 0
+                      },
+                      {
+                        "id": 4004,
+                        "name": "bw-male",
+                        "value": 0
+                      },
+                      {
+                        "id": 4005,
+                        "name": "fw-female",
+                        "value": 0
+                      },
+                      {
+                        "id": 4006,
+                        "name": "bw-female",
+                        "value": 1
+                      },
+                      {
+                        "id": 4011,
+                        "name": "fw-age",
+                        "value": 0,
+                        "bins": [
+                          0,
+                          0,
+                          0,
+                          0,
+                          0
+                        ]
+                      },
+                      {
+                        "id": 4012,
+                        "name": "bw-age",
+                        "value": 1,
+                        "bins": [
+                          0,
+                          0,
+                          0,
+                          1,
+                          0
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "package_info": {
+              "agent_id": 1030,
+              "id": 1003,
+              "version": "5.0"
+            },
+            "sensor_info": {
+              "serial_number": "80:1F:12:D5:30:DC",
+              "type": "SINGLE_SENSOR"
+            }
+          }
+        },
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "line_count");
+        assert.equal(value.data.bw, 1);
+        assert.equal(value.data.fw, 0);
+
+        validateSchema(value.data, lineCountSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "age_buckets");
+        assert.equal(value.data.bucketBw1, 0);
+        assert.equal(value.data.bucketBw2, 0);
+        assert.equal(value.data.bucketBw3, 0);
+        assert.equal(value.data.bucketBw4, 1);
+        assert.equal(value.data.bucketBw5, 0);
+
+        assert.equal(value.data.bucketFw1, 0);
+        assert.equal(value.data.bucketFw2, 0);
+        assert.equal(value.data.bucketFw3, 0);
+        assert.equal(value.data.bucketFw4, 0);
+        assert.equal(value.data.bucketFw5, 0);
+
+        // No schema as this can be a lot of different keys
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "gender");
+        assert.equal(value.data.fwMen, 0);
+        assert.equal(value.data.fwWoman, 0);
+        assert.equal(value.data.bwMen, 0);
+        assert.equal(value.data.bwWomen, 1);
+
+        validateSchema(value.data, genderSchema, { throwError: true });
+      });
+
+      consume(data);
+    });
+
+    it("should decode the Xovis V5 line + gender bucket payload", () => {
+      const data = {
+        data: {
+          "logics_data": {
+            "logics": [
+              {
+                "id": 1001,
+                "name": "POI5",
+                "info": "XLT_ZONE_OCCUPANCY_COUNT",
+                "geometries": [
+                  {
+                    "id": 1002,
+                    "type": "ZONE",
+                    "name": "POI5"
+                  }
+                ],
+                "records": [
+                  {
+                    "from": 1783674240000,
+                    "to": 1783674300000,
+                    "samples": 1,
+                    "samples_expected": 1,
+                    "counts": [
+                      {
+                        "id": 1001001,
+                        "name": "balance",
+                        "value": 1
+                      },
+                      {
+                        "id": 1001002,
+                        "name": "visits",
+                        "value": 1
+                      },
+                      {
+                        "id": 1001003,
+                        "name": "dwell_time",
+                        "value": 83.646004,
+                        "unit": "seconds"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "package_info": {
+              "agent_id": 1002,
+              "id": 1,
+              "version": "5.0"
+            },
+            "sensor_info": {
+              "serial_number": "00:6E:02:06:9B:48",
+              "type": "SINGLE_SENSOR"
+            }
+          }
+        },
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "zone");
+        assert.equal(value.data.peopleInZone, 1);
+        assert.equal(value.data.visits, 1);
+        assert.equal(value.data.dwellTime, 84);
+
+        validateSchema(value.data, zoneSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+        assert.typeOf(value, "object");
+
+        assert.equal(value.lastVisits, 1);
+      });
+
+      consume(data);
+    });
   });
 });

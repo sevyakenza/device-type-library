@@ -1,26 +1,36 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("Elsys Sound uplink", () => {
-  let noiseSchema = null;
+  let soundSchema = null;
   let consume = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils.loadSchema(`${__dirname}/noise.schema.json`).then((parsedSchema) => {
-      noiseSchema = parsedSchema;
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/sound.schema.json`).then((parsedSchema) => {
+      soundSchema = parsedSchema;
       done();
     });
   });
 
+  let noiseSchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/noise.schema.json`)
+      .then((parsedSchema) => {
+        noiseSchema = parsedSchema;
+        done();
+      });
+  });
+
   let lifecycleSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
+    loadSchema(`${__dirname}/lifecycle.schema.json`)
       .then((parsedSchema) => {
         lifecycleSchema = parsedSchema;
         done();
@@ -29,8 +39,7 @@ describe("Elsys Sound uplink", () => {
 
   let defaultSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/default.schema.json`)
+    loadSchema(`${__dirname}/default.schema.json`)
       .then((parsedSchema) => {
         defaultSchema = parsedSchema;
         done();
@@ -46,7 +55,7 @@ describe("Elsys Sound uplink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -56,10 +65,10 @@ describe("Elsys Sound uplink", () => {
         assert.equal(value.data.humidity, 35);
         assert.equal(value.data.temperature, 23.8);
 
-        utils.validateSchema(value.data, defaultSchema, { throwError: true });
+        validateSchema(value.data, defaultSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -68,10 +77,22 @@ describe("Elsys Sound uplink", () => {
         assert.equal(value.data.batteryVoltage, 3.574);
         assert.equal(value.data.batteryLevel, 100);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "sound");
+        assert.equal(value.data.soundPeak, 64);
+        assert.equal(value.data.soundAvg, 44);
+
+        validateSchema(value.data, soundSchema, { throwError: true });
+      });
+
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -80,7 +101,7 @@ describe("Elsys Sound uplink", () => {
         assert.equal(value.data.soundPeak, 64);
         assert.equal(value.data.soundAvg, 44);
 
-        utils.validateSchema(value.data, noiseSchema, { throwError: true });
+        validateSchema(value.data, noiseSchema, { throwError: true });
       });
 
       consume(data);

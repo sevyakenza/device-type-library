@@ -1,0 +1,333 @@
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
+
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+describe("Verge Sense Uplink", () => {
+  let spaceAvailabilitySchema = null;
+  let consume = null;
+  before((done) => {
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/space_availability.schema.json`)
+      .then((parsedSchema) => {
+        spaceAvailabilitySchema = parsedSchema;
+        done();
+      });
+  });
+
+  let occupancySchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/occupancy.schema.json`)
+      .then((parsedSchema) => {
+        occupancySchema = parsedSchema;
+        done();
+      });
+  });
+
+  let areaCountReportSchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/area_count.schema.json`)
+      .then((parsedSchema) => {
+        areaCountReportSchema = parsedSchema;
+        done();
+      });
+  });
+
+  let sensorReportSchema = null;
+  before((done) => {
+    loadSchema(`${__dirname}/sensor_report.schema.json`)
+      .then((parsedSchema) => {
+        sensorReportSchema = parsedSchema;
+        done();
+      });
+  });
+
+  describe("consume()", () => {
+    it("should decode the Verge Sense space report payload && init state", () => {
+      const data = {
+        data: {
+          "building_ref_id": "EA21",
+          "floor_ref_id": "0070",
+          "space_ref_id": "EG7859.43",
+          "space_id": 602439,
+          "sensor_ids": [
+            "30Z-R9E",
+            "30Z-SNE"
+          ],
+          "person_count": 0,
+          "signs_of_life": false,
+          "motion_detected": false,
+          "event_type": "space_report",
+          "timestamp": "2024-11-21T13:31:45.000Z",
+          "people": {
+            "count": 0,
+            "distances": {
+              "values": [],
+              "units": "meters"
+            },
+            "coordinates": []
+          }
+        }
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "occupancy");
+        assert.equal(value.data.occupancy, false);
+        assert.equal(value.data.occupied, 0);
+
+        validateSchema(value.data, occupancySchema, {
+          throwError: true,
+        });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+
+        // assert.equal(value.lastEmittedAt, now);
+        assert.equal(value.lastOccupied, "FREE");
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "area_count");
+        assert.equal(value.data.peopleCount, 0);
+        assert.equal(value.data.signsOfLife, false);
+
+        validateSchema(value.data, areaCountReportSchema, {
+          throwError: true,
+        });
+      });
+
+      consume(data);
+    });
+
+    it("should decode the Verge Sense space availability payload", () => {
+      const data = {
+        state: {
+          lastEmittedAt: new Date().getTime() - 3600001,
+          lastOccupied: "FREE"
+        },
+        data: {
+          "motion_detected": null,
+          "building_ref_id": "EA21",
+          "people": null,
+          "environment": null,
+          "signs_of_life": null,
+          "event_type": "space_availability",
+          "space_ref_id": "EG7859.43",
+          "state": "occupied",
+          "sensor_ids": [
+            "30Z-R9E",
+            "30Z-SNE"
+          ],
+          "space_id": 602439,
+          "person_count": null,
+          "floor_ref_id": "0070",
+          "timestamp": "2024-11-21T13:37:45Z"
+        }
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "occupancy");
+        assert.equal(value.data.occupancy, 1);
+        assert.equal(value.data.occupied, true);
+
+        validateSchema(value.data, occupancySchema, {
+          throwError: true,
+        });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+
+        // assert.equal(value.lastEmittedAt, new Date().getTime());
+        assert.equal(value.lastOccupied, "OCCUPIED");
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "space_availability");
+        assert.equal(value.data.state, "OCCUPIED");
+
+        validateSchema(value.data, spaceAvailabilitySchema, {
+          throwError: true,
+        });
+      });
+
+      consume(data);
+    });
+
+    it("should decode the Verge Sense floor report", () => {
+      const data = {
+        data: {
+          "motion_detected": null,
+          "signs_of_life": null,
+          "event_type": "space_report",
+          "space_ref_id": null,
+          "building_ref_id": "MM4",
+          "sensor_ids": [
+            "00:6E:02:01:F0:9C",
+            "00:6E:02:05:E6:10",
+            "00:6E:02:07:27:2C"
+          ],
+          "space_id": 820755,
+          "person_count": 150,
+          "people": {
+            "count": 150,
+            "coordinates": []
+          },
+          "floor_ref_id": "03",
+          "timestamp": "2026-03-25T10:27:34.942Z"
+        }
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+      });
+
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "area_count");
+        assert.equal(value.data.peopleCount, 150);
+
+        validateSchema(value.data, areaCountReportSchema, {
+          throwError: true,
+        });
+      });
+
+      consume(data);
+    });
+
+    it("should decode the Verge Sense sensor report", () => {
+      const data = {
+        data: {
+          "building_ref_id": "SYLE",
+          "event_type": "sensor_report",
+          "floor_ref_id": "23",
+          "person_count": 0,
+          "sensor_id": "3BE-4NZ",
+          "signs_of_life": false,
+          "space_ref_id": "23. C0.010",
+          "timestamp": "2026-04-08T16:44:13.000Z"
+        }
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+      });
+
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "sensor_report");
+        assert.equal(value.data.signsOfLife, false);
+
+        validateSchema(value.data, sensorReportSchema, {
+          throwError: true,
+        });
+      });
+
+      consume(data);
+    });
+
+    it("should repeate the Verge Sense space availability payload", () => {
+      const data = {
+        state: {
+          lastHour: new Date().getHours() - 1,
+          lastOccupied: "FREE"
+        },
+        data: {
+          "building_ref_id": "EA21",
+          "floor_ref_id": "0070",
+          "space_ref_id": "EG7859.43",
+          "space_id": 602439,
+          "sensor_ids": [
+            "30Z-R9E",
+            "30Z-SNE"
+          ],
+          "person_count": 0,
+          "signs_of_life": false,
+          "motion_detected": false,
+          "event_type": "space_report",
+          "timestamp": "2024-11-21T13:31:45.000Z",
+          "people": {
+            "count": 0,
+            "distances": {
+              "values": [],
+              "units": "meters"
+            },
+            "coordinates": []
+          }
+        }
+      };
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "occupancy");
+        assert.equal(value.data.occupancy, 0);
+        assert.equal(value.data.occupied, false);
+
+        validateSchema(value.data, occupancySchema, {
+          throwError: true,
+        });
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "state");
+        assert.isNotNull(value);
+
+        assert.exists(value.lastEmittedAt);
+        assert.equal(value.lastOccupied, "FREE");
+      });
+
+      expectEmits((type, value) => {
+        assert.equal(type, "sample");
+        assert.isNotNull(value);
+        assert.typeOf(value.data, "object");
+
+        assert.equal(value.topic, "area_count");
+        assert.equal(value.data.peopleCount, 0);
+        assert.equal(value.data.signsOfLife, false);
+
+        validateSchema(value.data, areaCountReportSchema, {
+          throwError: true,
+        });
+      });
+
+      consume(data);
+    });
+  });
+});

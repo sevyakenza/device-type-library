@@ -1,19 +1,20 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("PMX TCR Uplinks", () => {
   let consume = null;
 
   let idSchema = null;
   before((done) => {
-    const script = rewire("./uplink.js");
-    consume = utils.init(script);
-    utils
-      .loadSchema(`${__dirname}/id.schema.json`)
+    const script = rewire(`${__dirname}/uplink.js`);
+    consume = init(script);
+    loadSchema(`${__dirname}/id.schema.json`)
       .then((parsedSchema) => {
         idSchema = parsedSchema;
         done();
@@ -22,8 +23,7 @@ describe("PMX TCR Uplinks", () => {
 
   let udcSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/udc.schema.json`)
+    loadSchema(`${__dirname}/udc.schema.json`)
       .then((parsedSchema) => {
         udcSchema = parsedSchema;
         done();
@@ -32,8 +32,7 @@ describe("PMX TCR Uplinks", () => {
 
   let cat1Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/cat1.schema.json`)
+    loadSchema(`${__dirname}/cat1.schema.json`)
       .then((parsedSchema) => {
         cat1Schema = parsedSchema;
         done();
@@ -42,8 +41,7 @@ describe("PMX TCR Uplinks", () => {
 
   let cat2Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/cat2.schema.json`)
+    loadSchema(`${__dirname}/cat2.schema.json`)
       .then((parsedSchema) => {
         cat2Schema = parsedSchema;
         done();
@@ -52,8 +50,7 @@ describe("PMX TCR Uplinks", () => {
 
   let cat3Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/cat3.schema.json`)
+    loadSchema(`${__dirname}/cat3.schema.json`)
       .then((parsedSchema) => {
         cat3Schema = parsedSchema;
         done();
@@ -62,8 +59,7 @@ describe("PMX TCR Uplinks", () => {
 
   let cat4Schema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/cat4.schema.json`)
+    loadSchema(`${__dirname}/cat4.schema.json`)
       .then((parsedSchema) => {
         cat4Schema = parsedSchema;
         done();
@@ -73,8 +69,7 @@ describe("PMX TCR Uplinks", () => {
 
   let lifecycleSchema = null;
   before((done) => {
-    utils
-      .loadSchema(`${__dirname}/lifecycle.schema.json`)
+    loadSchema(`${__dirname}/lifecycle.schema.json`)
       .then((parsedSchema) => {
         lifecycleSchema = parsedSchema;
         done();
@@ -91,7 +86,7 @@ describe("PMX TCR Uplinks", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -102,7 +97,7 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.data.firmware, "1.1.0");
         assert.equal(value.data.sbx, "4.2.0");
 
-        utils.validateSchema(value.data, idSchema, { throwError: true });
+        validateSchema(value.data, idSchema, { throwError: true });
       });
 
       consume(data);
@@ -119,7 +114,7 @@ describe("PMX TCR Uplinks", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -130,10 +125,10 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.data.rtlCounter, 1100);
         assert.equal(value.data.rtlSpeed, 52);
 
-        utils.validateSchema(value.data, udcSchema, { throwError: true });
+        validateSchema(value.data, udcSchema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -141,7 +136,7 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.topic, "lifecycle");
         assert.equal(value.data.batteryVoltage, 5.1);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);
@@ -158,7 +153,7 @@ describe("PMX TCR Uplinks", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -169,10 +164,10 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.data.rtlCounter, 1100);
         assert.equal(value.data.rtlSpeed, 52);
 
-        utils.validateSchema(value.data, cat1Schema, { throwError: true });
+        validateSchema(value.data, cat1Schema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -180,7 +175,7 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.topic, "lifecycle");
         assert.equal(value.data.batteryVoltage, 5.1);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);
@@ -197,7 +192,7 @@ describe("PMX TCR Uplinks", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -208,10 +203,10 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.data.rtlCounter, 1100);
         assert.equal(value.data.rtlSpeed, 52);
 
-        utils.validateSchema(value.data, cat2Schema, { throwError: true });
+        validateSchema(value.data, cat2Schema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -219,7 +214,7 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.topic, "lifecycle");
         assert.equal(value.data.batteryVoltage, 5.1);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);
@@ -236,7 +231,7 @@ describe("PMX TCR Uplinks", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -247,10 +242,10 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.data.rtlCounter, 1100);
         assert.equal(value.data.rtlSpeed, 52);
 
-        utils.validateSchema(value.data, cat3Schema, { throwError: true });
+        validateSchema(value.data, cat3Schema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -258,7 +253,7 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.topic, "lifecycle");
         assert.equal(value.data.batteryVoltage, 5.1);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);
@@ -275,7 +270,7 @@ describe("PMX TCR Uplinks", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -286,10 +281,10 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.data.rtlCounter, 1100);
         assert.equal(value.data.rtlSpeed, 52);
 
-        utils.validateSchema(value.data, cat4Schema, { throwError: true });
+        validateSchema(value.data, cat4Schema, { throwError: true });
       });
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "sample");
         assert.isNotNull(value);
         assert.typeOf(value.data, "object");
@@ -297,7 +292,7 @@ describe("PMX TCR Uplinks", () => {
         assert.equal(value.topic, "lifecycle");
         assert.equal(value.data.batteryVoltage, 5.1);
 
-        utils.validateSchema(value.data, lifecycleSchema, { throwError: true });
+        validateSchema(value.data, lifecycleSchema, { throwError: true });
       });
 
       consume(data);

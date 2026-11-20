@@ -2,13 +2,38 @@
   "name": "miro Insight",
   "version": "1.0.0",
   "manufacturer": "Miromico",
-  "url": "https://miromico.ch/portfolio/miro-insight/?lang=en",
-  "description": "Advanced indoor air quality sensor device featuring various sensors environmental conditions such as temperature, relative humidity and Co2.",
+  "url": "https://miromico.ch/en/products/details/miro-Insight",
+  "description": "Indoor sensor that measures CO2, temperature and humidity to assess indoor air quality. Used for monitoring air quality and ventilation needs in offices, schools, meeting rooms and public buildings to improve comfort.",
   "author": "Akenza AG",
   "firmwareVersion": "V2.5.0",
   "loraDeviceClass": "A",
-  "availableSensors": ["Temperature", "Humidity", "CO2"],
-  "outputTopics": ["co2", "lifecycle", "settings", "temperature"],
+  "availableSensors": [
+    "Temperature",
+    "Humidity",
+    "CO2"
+  ],
+  "outputTopics": [
+    "co2",
+    "lifecycle",
+    "settings",
+    "temperature"
+  ],
   "encoding": "HEX",
-  "connectivity": "LORA"
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort"
+  ],
+  "keywords": [
+    "Miromico",
+    "miro Insight",
+    "CO2",
+    "temperature",
+    "humidity",
+    "air quality",
+    "IAQ",
+    "ventilation",
+    "office",
+    "classroom",
+    "LoRaWAN"
+  ]
 }

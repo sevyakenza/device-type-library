@@ -1,14 +1,46 @@
 {
-  "name": "ERS CO2",
+  "name": "ERS CO2 LoRa",
   "version": "1.0.0",
   "manufacturer": "Elsys",
   "url": "https://www.elsys.se/en/ers-co2/",
-  "description": "ERS CO2 gives you the opportunity to create the best possible workplace, classroom, library, or another public area. The sensor measures CO2, temperature, humidity, light, and motion.",
+  "description": "Indoor sensor that measures CO2, temperature, humidity, light and motion. Used for monitoring air quality, ventilation and room occupancy in workplaces, classrooms, libraries and public areas.",
   "author": "Akenza AG",
   "firmwareVersion": "V2.3.5",
   "loraDeviceClass": "A",
-  "availableSensors": ["Light", "Humidity", "Temperature", "CO2", "Motion"],
-  "outputTopics": ["default", "lifecycle", "occupancy", "configuration"],
+  "availableSensors": [
+    "Light",
+    "Humidity",
+    "Temperature",
+    "CO2",
+    "Motion"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle",
+    "occupancy",
+    "configuration"
+  ],
   "encoding": "HEX",
-  "connectivity": "LORA"
+  "connectivity": "LORA",
+  "useCases": [
+    "Indoor Air Quality & Comfort",
+    "Occupancy & Space Utilization"
+  ],
+  "keywords": [
+    "Elsys",
+    "ERS CO2",
+    "ERS",
+    "CO2",
+    "NDIR",
+    "temperature",
+    "humidity",
+    "light",
+    "motion",
+    "PIR",
+    "air quality",
+    "ventilation",
+    "occupancy",
+    "classroom",
+    "LoRaWAN"
+  ]
 }

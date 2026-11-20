@@ -1,0 +1,34 @@
+{
+  "name": "EM300-CL",
+  "version": "1.0.0",
+  "manufacturer": "Milesight",
+  "url": "https://www.milesight.com/iot/product/lorawan-sensor/em300-cl",
+  "description": "Capacitive level sensor that detects the liquid level from outside a container without contact with the liquid. Used for monitoring the fill level of soap and hand wash dispensers and other liquid containers.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Liquid"
+  ],
+  "outputTopics": [
+    "default",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Fill Level Monitoring"
+  ],
+  "keywords": [
+    "Milesight",
+    "EM300-CL",
+    "capacitive",
+    "liquid level",
+    "fill level",
+    "non-contact",
+    "soap dispenser",
+    "hand sanitizer",
+    "container",
+    "LoRaWAN"
+  ]
+}

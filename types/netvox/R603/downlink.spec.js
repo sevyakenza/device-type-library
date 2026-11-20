@@ -1,15 +1,17 @@
-const chai = require("chai");
+import { assert } from "chai";
+import rewire from "rewire";
+import { init, loadSchema, expectEmits, validateSchema } from "test-utils";
 
-const rewire = require("rewire");
-const utils = require("test-utils");
-
-const { assert } = chai;
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 describe("R603 Downlink", () => {
   let consume = null;
   before((done) => {
-    const script = rewire("./downlink.js");
-    consume = utils.init(script);
+    const script = rewire(`${__dirname}/downlink.js`);
+    consume = init(script);
     done();
   });
 
@@ -25,7 +27,7 @@ describe("R603 Downlink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "downlink");
         assert.isNotNull(value);
 
@@ -47,7 +49,7 @@ describe("R603 Downlink", () => {
         },
       };
 
-      utils.expectEmits((type, value) => {
+      expectEmits((type, value) => {
         assert.equal(type, "downlink");
         assert.isNotNull(value);
         assert.equal(value.payloadHex, "07DEff0000000000000000");

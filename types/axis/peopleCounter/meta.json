@@ -1,0 +1,33 @@
+{
+  "name": "People Counter",
+  "version": "1.0.0",
+  "manufacturer": "Axis",
+  "url": "https://www.axis.com/products/axis-people-counter",
+  "description": "Camera-based people counter that runs on compatible ceiling-mounted network cameras. It counts people in both directions in real time, ignores objects such as strollers and carts, and supports site performance analysis.",
+  "author": "Akenza AG",
+  "firmwareVersion": "V1.0.0",
+  "availableSensors": [
+    "People Counting"
+  ],
+  "outputTopics": [
+    "line_count"
+  ],
+  "encoding": "JSON",
+  "connectivity": "HTTP",
+  "useCases": [
+    "People & Vehicle Counting"
+  ],
+  "keywords": [
+    "Axis",
+    "People Counter",
+    "camera",
+    "video analytics",
+    "ceiling camera",
+    "line counting",
+    "in out counting",
+    "footfall",
+    "retail",
+    "visitor counting",
+    "HTTP"
+  ]
+}

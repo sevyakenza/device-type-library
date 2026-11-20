@@ -1,0 +1,23 @@
+{
+  "$id": "https://akenza.io/vergeSense/cloudConnector/area_count.schema.json",
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "processingType": "uplink_decoder",
+  "topic": "area_count",
+  "title": "Area count",
+  "properties": {
+    "peopleCount": {
+      "title": "People count",
+      "description": "People in Area",
+      "type": "integer"
+    },
+    "signsOfLife": {
+      "title": "Signs of live",
+      "description": "Equals true if there were objects like laptops, backpacks, coats, etc. detected",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "peopleCount"
+  ]
+}

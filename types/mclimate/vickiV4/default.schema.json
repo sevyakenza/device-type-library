@@ -8,27 +8,16 @@
   "properties": {
     "targetTemperature": {
       "title": "Target temperature",
-      "unit": "°C",
-      "type": "number",
       "description": "The target temperature in °C.",
-      "minimum": -3276.5,
-      "maximum": 3276.5
+      "$ref": "https://raw.githubusercontent.com/akenza-io/device-type-library/main/data-models/environment/schema.json#/$defs/temperature/celsius"
     },
     "sensorTemperature": {
       "title": "Sensor temperature",
-      "unit": "°C",
-      "type": "number",
       "description": "The sensor temperature in °C.",
-      "minimum": -3276.5,
-      "maximum": 3276.5
+      "$ref": "https://raw.githubusercontent.com/akenza-io/device-type-library/main/data-models/environment/schema.json#/$defs/temperature/celsius"
     },
     "humidity": {
-      "title": "Humidity",
-      "unit": "%",
-      "type": "number",
-      "description": "The relative humidity in %",
-      "minimum": 0,
-      "maximum": 100
+      "$ref": "https://raw.githubusercontent.com/akenza-io/device-type-library/main/data-models/environment/schema.json#/$defs/humidity/percent"
     },
     "motorRange": {
       "title": "Motor range",
@@ -41,6 +30,12 @@
       "type": "integer",
       "unit": "°",
       "description": "Motor position"
+    },
+    "valveOpenness": {
+      "title": "Valve openness",
+      "description": "Valve openness calculated from the motor position and motor range",
+      "type": "integer",
+      "unit": "%"
     },
     "openWindow": {
       "title": "Open window",

@@ -1,0 +1,37 @@
+{
+  "name": "TEMP 4",
+  "version": "1.0.0",
+  "manufacturer": "Adeunis",
+  "url": "https://www.adeunis.com/en/produit/temp-temperature/",
+  "description": "Temperature sensor with an ambient probe and a remote contact probe. It reports measurements and configurable threshold alarms, used for monitoring rooms, fridges, cold rooms, pipes and technical equipment.",
+  "author": "Akenza",
+  "firmwareVersion": "V4.0.0",
+  "loraDeviceClass": "A",
+  "availableSensors": [
+    "Temperature"
+  ],
+  "outputTopics": [
+    "alert",
+    "configuration",
+    "default",
+    "lifecycle"
+  ],
+  "encoding": "HEX",
+  "connectivity": "LORA",
+  "useCases": [
+    "Cold Chain & Temperature Compliance"
+  ],
+  "keywords": [
+    "Adeunis",
+    "TEMP 4",
+    "temperature",
+    "external probe",
+    "contact probe",
+    "threshold alarm",
+    "fridge",
+    "cold room",
+    "HACCP",
+    "cold chain",
+    "LoRaWAN"
+  ]
+}
